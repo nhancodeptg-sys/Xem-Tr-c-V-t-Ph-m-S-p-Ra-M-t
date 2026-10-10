@@ -6,16 +6,6 @@
   <title>Xem Trước Gói Vật Phẩm Play Together Chưa Ra Mắt</title>
   <meta name="description" content="Trang xem trước độc quyền các gói sản phẩm, hộp bốc thăm và sự kiện tiếp theo chưa ra mắt của Play Together. Cập nhật sớm nhất các vật phẩm sắp xuất hiện!">
   
-  <!-- PRELOAD TOÀN BỘ ẢNH ĐỂ LOAD TỨC THÌ -->
-  <link rel="preload" as="image" href="https://nhasangtaoptg.shop/itemplay/index.php/IMG_1787851474933">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/q30o78Qt.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/MGIKSrkL.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/HYLpwDfd.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/k9jlcZGq.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/wGGoqTci.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/8Wz8OYoZ.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/3aC7LxR4.png">
-
   <link rel="shortcut icon" href="//img.zing.vn/products/playtogether/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
@@ -47,8 +37,6 @@
         --brand-primary: #FF5722;
         --brand-secondary: #10b981;
     }
-    
-    /* CHẶN BÔI ĐEN VÀ KÉO THẢ TOÀN DIỆN */
     * {
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -56,21 +44,14 @@
       user-select: none;
       -webkit-touch-callout: none;
     }
-
     html, body {
       touch-action: pan-x pan-y;
     }
-
-    /* CHẶN KÉO THẢ HÌNH ẢNH */
     img {
       -webkit-user-drag: none;
-      -khtml-user-drag: none;
-      -moz-user-drag: none;
-      -o-user-drag: none;
       user-drag: none;
       pointer-events: none !important;
     }
-
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -132,8 +113,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    
-    /* Popup styling */
     .popup-overlay {
       display: none; 
       position: fixed; 
@@ -192,7 +171,6 @@
       color: #ffffff;
       transform: rotate(90deg);
     }
-    
     .modal-glossy-overlay {
       position: absolute;
       inset: 0;
@@ -211,7 +189,6 @@
       opacity: 0;
       transform: scale(1);
     }
-    
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -223,7 +200,6 @@
         gap: 12px !important;
       }
     }
-    
     .preview-img-wrapper {
       position: relative;
       width: 100%;
@@ -231,7 +207,6 @@
       background: rgba(15, 23, 42, 0.05);
       overflow: hidden;
     }
-    
     button, a, select, input, textarea, [role="button"], .preview-card, .carousel-dot {
       pointer-events: auto !important;
     }
@@ -242,7 +217,6 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-
     .modal-title-wrapper {
       display: flex;
       align-items: center;
@@ -250,29 +224,6 @@
       gap: 12px;
       width: 100%;
     }
-    .modal-avatar-circle {
-      width: 64px;
-      height: 64px;
-      min-width: 64px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid #f59e0b;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-      background: rgba(0,0,0,0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .modal-avatar-circle video,
-    .modal-avatar-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-    }
-
-    /* Style cho chữ watermark mờ trên vật phẩm chi tiết */
     .item-watermark-container {
       position: relative;
     }
@@ -294,52 +245,37 @@
   </style>
 
   <script>
+    // CHẶN XUẤT FILE / LƯU MÁY (CHUYỂN THÀNH MÃ NHỊ PHÂN NẾU BỊ TẢI CỤC BỘ)
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.keyCode === 123 || (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73 || e.keyCode === 74)) ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.location.protocol === 'file:') {
+        document.body.innerHTML = `
+          <div style="background:#0b0f19; color:#ff5722; width:100vw; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:monospace; text-align:center; padding:20px;">
+            <h1 style="font-size:18px; margin-bottom:10px;">🔒 HỆ THỐNG ĐÃ KHÓA BẢO MẬT (ACCESS DENIED)</h1>
+            <p style="font-size:11px; color:#94a3b8; max-width:450px; word-break:break-all; line-height: 1.6;">
+              01000111 01110011 01110011 00111010 00100000 01001001 01101110 01110110 01100001 01101110 01101001 01100100 00100000 01001100 01101001 01101110 01101011 00100000 01000001 01101110 01100100 00100000 01000010 01101001 01101110 01100001 01110010 01111001 00100000 01010011 01110100 01110010 01110111 01110100 01110101 01110010 01100101
+            </p>
+            <p style="margin-top:15px; font-size:12px; color:#fff;">Phát hiện tệp tin HTML bị trích xuất hoặc lưu ra ngoài máy. Toàn bộ tài nguyên, hình ảnh và mã nguồn đã bị vô hiệu hóa hoàn toàn.</p>
+          </div>
+        `;
+      }
+    });
+
     (function() {
-      const indexDefaultTheme = 'light';
       const storedTheme = localStorage.getItem('color-theme');
-      if (storedTheme === 'dark' || (storedTheme === null && indexDefaultTheme === 'dark')) {
+      if (storedTheme === 'dark' || storedTheme === null) {
         document.documentElement.classList.add('dark');
       } else {
         document.documentElement.classList.remove('dark');
       }
     })();
-
-    // ================= SCRIPT BẢO MẬT NÂNG CAO =================
-    // 1. Chặn click chuột phải
-    document.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-      return false;
-    });
-
-    // 2. Chặn các phím tắt F12, Ctrl+U, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+S, Ctrl+Shift+C
-    document.addEventListener('keydown', function(e) {
-      if (
-        e.keyCode === 123 || // F12
-        (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I, J, C
-        (e.ctrlKey && e.keyCode === 85) || // Ctrl+U
-        (e.ctrlKey && e.keyCode === 83) || // Ctrl+S
-        (e.ctrlKey && e.keyCode === 80)    // Ctrl+P (Print)
-      ) {
-        e.preventDefault();
-        return false;
-      }
-    });
-
-    // 3. Chặn kéo thả hình ảnh ra khỏi trình duyệt
-    document.addEventListener('dragstart', function(e) {
-      if (e.target.nodeName === 'IMG') {
-        e.preventDefault();
-        return false;
-      }
-    });
-
-    // 4. Phát hiện DevTools (Bảng điều khiển) mở lên -> Làm mờ hoặc cảnh báo
-    setInterval(function() {
-      const threshold = 160;
-      if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
-        document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#0b0f19;color:#fff;font-family:sans-serif;text-align:center;padding:20px;"><div><h2 style="color:#FF5722;font-size:24px;margin-bottom:10px;">⚠️ Cảnh Báo Bảo Mật</h2><p>Hệ thống phát hiện bạn đang bật công cụ nhà phát triển (F12). Truy cập bị từ chối!</p></div></div>';
-      }
-    }, 1000);
   </script>
 </head>
 <body class="transition-colors duration-300">
@@ -387,18 +323,6 @@
       <h2 id="page-main-heading" class="text-xl sm:text-3xl md:text-4xl font-extrabold font-outfit text-slate-800 dark:text-slate-100 leading-tight uppercase">
         Vật phẩm sự kiện <span class="gradient-text">sắp ra mắt</span>
       </h2>
-      
-      <div class="mt-6 max-w-xl mx-auto p-4 bg-gradient-to-br from-red-500/10 to-orange-500/10 dark:from-red-500/5 dark:to-orange-500/5 border border-red-500/20 dark:border-red-500/15 rounded-2xl flex items-start gap-3 shadow-lg shadow-red-500/5 backdrop-blur-md">
-        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 dark:bg-red-500/15 flex items-center justify-center text-red-500 dark:text-red-400 shadow-inner">
-          <i class="fas fa-triangle-exclamation text-sm animate-pulse"></i>
-        </div>
-        <div class="text-left flex-grow">
-          <h5 class="text-xs font-extrabold uppercase tracking-widest text-red-500 dark:text-red-400 mb-1">⚠️ Thông Báo Bảo Mật</h5>
-          <p class="text-[11px] sm:text-xs leading-relaxed text-slate-600 dark:text-slate-400 font-medium">
-            Trang web được bảo mật toàn diện. Mọi hành vi cố tình lấy ảnh hoặc sao chép trái phép đều bị nghiêm cấm theo quy định của <span class="font-bold text-slate-800 dark:text-slate-200">Play Together VNG</span>.
-          </p>
-        </div>
-      </div>
     </div>
 
     <div class="flex justify-center mb-8">
@@ -431,141 +355,18 @@
             <div class="p-6 flex-grow flex flex-col justify-between">
               <div>
                 <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Nam Sinh Phòng Học Xám</h3>
-                
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Nam Sinh Phòng Học Xám</h3>
                 <div class="mt-4">
                   <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
                   <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/zuDr7KTX.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/SCKwgqGF.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/fep9OHWs.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+3</div>
+                    <div class="aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/zuDr7KTX.png" class="w-full h-full object-contain rounded-lg"></div>
+                    <div class="aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/SCKwgqGF.png" class="w-full h-full object-contain rounded-lg"></div>
+                    <div class="aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/fep9OHWs.png" class="w-full h-full object-contain rounded-lg"></div>
+                    <div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+3</div>
                   </div>
                 </div>
               </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Gói BT21 Halloween Bông Xốp -->
-          <article onclick='openDetailPopup("Gói BT21 Halloween Bông Xốp", "bt21", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/MGIKSrkL.jpeg"], ["https://cdn.upanhlaylink.com/i/tu5zLUaM.png","https://cdn.upanhlaylink.com/i/YqXI4Oqt.png","https://cdn.upanhlaylink.com/i/EAX97K4w.png","https://cdn.upanhlaylink.com/i/rRiS7Mgq.png","https://cdn.upanhlaylink.com/i/i8FoVGlW.png","https://cdn.upanhlaylink.com/i/udCF2qCN.png","https://cdn.upanhlaylink.com/i/yuGidMH5.png"])' style="cursor: pointer;" data-category="bt21" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-purple-600 text-white">Gói BT21</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/MGIKSrkL.jpeg" alt="Gói BT21 Halloween Bông Xốp" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói BT21 Halloween Bông Xốp</h3>
-                
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/tu5zLUaM.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/YqXI4Oqt.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/EAX97K4w.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+4</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Mùa Vvip Pass Hải Trình Lấp Lánh -->
-          <article onclick='openDetailPopup("Mùa Vvip Pass Hải Trình Lấp Lánh", "vvip_pass", "coming_soon", "Vvip Pass Shining Voyage", ["https://cdn.upanhlaylink.com/i/HYLpwDfd.jpeg"], ["https://cdn.upanhlaylink.com/i/Dh9Ogx6P.png","https://cdn.upanhlaylink.com/i/jmUEYEfF.png","https://cdn.upanhlaylink.com/i/QOlbBZIn.png","https://cdn.upanhlaylink.com/i/P4ZAvEeE.png","https://cdn.upanhlaylink.com/i/Uxl0dHby.png","https://cdn.upanhlaylink.com/i/rm9lHO1x.png","https://cdn.upanhlaylink.com/i/CZirVL1A.png","https://cdn.upanhlaylink.com/i/Ae0Ym7B5.png","https://cdn.upanhlaylink.com/i/BUWZZ0Wu.png"])' style="cursor: pointer;" data-category="vvip_pass" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-yellow-500 text-white">VIP Pass</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/HYLpwDfd.jpeg" alt="Mùa Vvip Pass Hải Trình Lấp Lánh" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Mùa Vvip Pass Hải Trình Lấp Lánh</h3>
-                <p class="text-xs text-slate-500 mt-2 italic">Vvip Pass Shining Voyage</p>
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/Dh9Ogx6P.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/jmUEYEfF.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/QOlbBZIn.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+6</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Gói Mẹo Phối Đồ Halloween -->
-          <article onclick='openDetailPopup("Gói Mẹo Phối Đồ Halloween", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/k9jlcZGq.jpeg"], ["https://cdn.upanhlaylink.com/i/3MbKJxwY.png","https://cdn.upanhlaylink.com/i/VgOlpUvg.png","https://cdn.upanhlaylink.com/i/i1lCo27Y.png","https://cdn.upanhlaylink.com/i/SuXjmAii.png","https://cdn.upanhlaylink.com/i/F4skeBhB.png","https://cdn.upanhlaylink.com/i/gRzojdDh.png","https://cdn.upanhlaylink.com/i/Idqv3Ss1.png","https://cdn.upanhlaylink.com/i/EJuP8Nhm.png","https://cdn.upanhlaylink.com/i/DEjDk8OO.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/k9jlcZGq.jpeg" alt="Gói Mẹo Phối Đồ Halloween" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Mẹo Phối Đồ Halloween</h3>
-                
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/3MbKJxwY.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/VgOlpUvg.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/i1lCo27Y.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+6</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Hộp Bốc Thăm Dự Án Zero -->
-          <article onclick='openDetailPopup("Hộp Bốc Thăm Dự Án Zero", "lucky_box", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/wGGoqTci.jpeg"], ["https://cdn.upanhlaylink.com/i/BpP6jBtZ.png","https://cdn.upanhlaylink.com/i/m8Ay9PhJ.png","https://cdn.upanhlaylink.com/i/W9hk9MIh.png","https://cdn.upanhlaylink.com/i/uQc2sDY0.png","https://cdn.upanhlaylink.com/i/c6euAmMA.png","https://cdn.upanhlaylink.com/i/3sMuyTgq.png","https://cdn.upanhlaylink.com/i/4KH678AW.png","https://cdn.upanhlaylink.com/i/ywozviav.png","https://cdn.upanhlaylink.com/i/aVQRSQeq.png","https://cdn.upanhlaylink.com/i/agRQJpEC.png","https://cdn.upanhlaylink.com/i/aDYB9bKA.png","https://cdn.upanhlaylink.com/i/62n03LYR.png","https://cdn.upanhlaylink.com/i/5MThhKYy.png","https://cdn.upanhlaylink.com/i/B33Ns1Sr.png"])' style="cursor: pointer;" data-category="lucky_box" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Hộp Bốc Thăm</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/wGGoqTci.jpeg" alt="Hộp Bốc Thăm Dự Án Zero" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Hộp Bốc Thăm Dự Án Zero</h3>
-                
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/BpP6jBtZ.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/m8Ay9PhJ.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/W9hk9MIh.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+11</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Hộp Bốc Thăm Chàng Lucifer -->
-          <article onclick='openDetailPopup("Hộp Bốc Thăm Chàng Lucifer", "lucky_box", "coming_soon", "Vvip Pass —> Hộp Bốc Thăm Chàng Lucifer", ["https://cdn.upanhlaylink.com/i/8Wz8OYoZ.jpeg"], ["https://cdn.upanhlaylink.com/i/zdMAUCsh.png","https://cdn.upanhlaylink.com/i/owrxXg6m.png","https://cdn.upanhlaylink.com/i/h9BhjKKI.png","https://cdn.upanhlaylink.com/i/WBjv797G.png","https://cdn.upanhlaylink.com/i/YJS42Fso.png","https://cdn.upanhlaylink.com/i/jPKsMsCx.png","https://cdn.upanhlaylink.com/i/bicFDxlx.png","https://cdn.upanhlaylink.com/i/3zGiCLxe.png","https://cdn.upanhlaylink.com/i/b9rlfjuL.png","https://cdn.upanhlaylink.com/i/Yu3qgwQw.png","https://cdn.upanhlaylink.com/i/5Gq9iDBn.png"])' style="cursor: pointer;" data-category="lucky_box" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Hộp Bốc Thăm</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/8Wz8OYoZ.jpeg" alt="Hộp Bốc Thăm Chàng Lucifer" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Hộp Bốc Thăm Chàng Lucifer</h3>
-                <p class="text-xs text-slate-500 mt-2 italic">Vvip Pass —> Hộp Bốc Thăm Chàng Lucifer</p>
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/zdMAUCsh.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/owrxXg6m.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/h9BhjKKI.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+8</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
                 <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
                 <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
               </div>
@@ -581,16 +382,19 @@
             <div class="p-6 flex-grow flex flex-col justify-between">
               <div>
                 <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói BT21 Halloween Party</h3>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói BT21 Halloween Party</h3>
                 <p class="text-xs text-slate-500 mt-2 italic">Bữa Tiệc Halloween BT21</p>
                 <div class="mt-4">
                   <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
                   <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/Tjln2EP4.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/NL9AuulI.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/2s9PJTyJ.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+4</div>
+                    <div class="aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/Tjln2EP4.png" class="w-full h-full object-contain rounded-lg"></div>
+                    <div class="aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/NL9AuulI.png" class="w-full h-full object-contain rounded-lg"></div>
+                    <div class="aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/2s9PJTyJ.png" class="w-full h-full object-contain rounded-lg"></div>
+                    <div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+4</div>
                   </div>
                 </div>
               </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
                 <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
                 <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
               </div>
@@ -652,10 +456,10 @@
 
     let packageDetailCache = {};
 
-    function openDetailPopup(name, type, status, description, mainImages, smallItems, customAvatarUrl) {
+    function openDetailPopup(name, type, status, description, mainImages, smallItems) {
       let data = packageDetailCache[name];
       if (!data) {
-        data = { name, type, status, description, mainImages, smallItems, customAvatarUrl };
+        data = { name, type, status, description, mainImages, smallItems };
       }
 
       const popup = document.getElementById('detail-popup');
@@ -665,83 +469,34 @@
       const carousel = document.getElementById('modal-carousel');
       const itemsContainer = document.getElementById('modal-items-container');
       const smallItemsGrid = document.getElementById('modal-small-items');
-      const titleWrapper = document.getElementById('modal-title-wrapper');
       
       title.innerText = data.name;
       desc.innerText = data.description || "";
-      if(data.description) {
-        desc.style.display = 'block';
-      } else {
-        desc.style.display = 'none';
-      }
+      desc.style.display = data.description ? 'block' : 'none';
       
-      const statusText = document.getElementById('modal-status-text');
-      if (statusText) {
-        statusText.innerHTML = `<i class="far fa-clock mr-1"></i> Trạng thái: ${data.status === 'released' ? 'Đã ra mắt' : 'Sắp ra mắt'}`;
-      }
-      
-      if (data.type === 'vvip_pass') {
-        badge.className = `px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-yellow-500 text-white mb-3 inline-block`;
-        badge.innerText = 'VIP Pass';
-      } else if (data.type === 'bt21') {
+      if (data.type === 'bt21') {
         badge.className = `px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-purple-600 text-white mb-3 inline-block`;
         badge.innerText = 'Gói BT21';
-      } else if (data.type === 'lucky_box') {
-        badge.className = `px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-brand-orange text-white mb-3 inline-block`;
-        badge.innerText = 'Hộp Bốc Thăm';
       } else {
         badge.className = `px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-brand-orange text-white mb-3 inline-block`;
         badge.innerText = 'Gói Sản Phẩm';
       }
       
       carousel.innerHTML = '';
-      if(!data.mainImages || data.mainImages.length === 0) {
-        carousel.innerHTML = `
-          <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 p-4">
-            <i class="fas fa-image text-4xl mb-2"></i>
-            <span class="text-xs">Không có ảnh chính</span>
-          </div>
-        `;
-      } else {
-        data.mainImages.forEach((img, idx) => {
-          const imgEl = document.createElement('img');
-          imgEl.src = img;
-          imgEl.alt = data.name;
-          imgEl.className = `absolute inset-0 w-full h-full object-cover modal-slider-img ${idx === 0 ? 'active' : 'inactive'}`;
-          carousel.appendChild(imgEl);
-        });
-      }
-
-      let circleAvatarEl = document.getElementById('modal-custom-circle-avatar');
-      if (data.customAvatarUrl) {
-        if (!circleAvatarEl) {
-          circleAvatarEl = document.createElement('div');
-          circleAvatarEl.id = 'modal-custom-circle-avatar';
-          circleAvatarEl.className = 'modal-avatar-circle';
-          titleWrapper.appendChild(circleAvatarEl);
-        }
-        if (data.customAvatarUrl.endsWith('.mov') || data.customAvatarUrl.endsWith('.mp4')) {
-          circleAvatarEl.innerHTML = `
-            <video autoplay muted loop playsinline>
-              <source src="${data.customAvatarUrl}" type="video/mp4">
-            </video>
-          `;
-        } else {
-          circleAvatarEl.innerHTML = `<img src="${data.customAvatarUrl}" alt="Avatar">`;
-        }
-        circleAvatarEl.style.display = 'flex';
-      } else {
-        if (circleAvatarEl) {
-          circleAvatarEl.style.display = 'none';
-        }
-      }
+      data.mainImages.forEach((img, idx) => {
+        const imgEl = document.createElement('img');
+        imgEl.src = img;
+        imgEl.alt = data.name;
+        imgEl.className = `absolute inset-0 w-full h-full object-cover modal-slider-img ${idx === 0 ? 'active' : 'inactive'}`;
+        carousel.appendChild(imgEl);
+      });
       
       smallItemsGrid.innerHTML = '';
       if(data.smallItems && data.smallItems.length > 0) {
         itemsContainer.classList.remove('hidden');
         data.smallItems.forEach(itemSrc => {
           const col = document.createElement('div');
-          col.className = 'item-watermark-container aspect-square rounded-xl bg-slate-100 dark:bg-slate-800/80 p-1 border border-slate-200/50 dark:border-slate-700/50 flex items-center justify-center overflow-hidden hover:scale-110 transition-transform duration-200';
+          col.className = 'item-watermark-container aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden hover:scale-110 transition-transform duration-200';
           col.innerHTML = `<img src="${itemSrc}" alt="item" class="w-full h-full object-contain rounded-lg">`;
           smallItemsGrid.appendChild(col);
         });
@@ -762,44 +517,35 @@
       const popup = document.getElementById('detail-popup');
       if(popup) {
         popup.addEventListener('click', function(e) {
-          if(e.target === this) {
-            closeDetailPopup();
-          }
+          if(e.target === this) closeDetailPopup();
         });
       }
     });
   </script>
 
-  <div id="detail-popup" class="popup-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div id="detail-popup" class="popup-overlay" role="dialog" aria-modal="true">
     <div class="popup-content max-h-[90vh] overflow-y-auto">
       <button type="button" class="popup-close" onclick="closeDetailPopup()">&times;</button>
       
-      <div class="relative w-full aspect-video bg-slate-900/5 dark:bg-slate-950/10 rounded-2xl overflow-hidden mb-4 flex items-center justify-center border border-slate-200/50 dark:border-slate-800/80 shadow-md">
+      <div class="relative w-full aspect-video bg-slate-900/5 dark:bg-slate-950/10 rounded-2xl overflow-hidden mb-4 flex items-center justify-center border border-slate-200/50 dark:border-slate-800 shadow-md">
         <div class="modal-glossy-overlay"></div>
-        <div id="modal-carousel" class="w-full h-full relative preview-carousel-slider flex items-center justify-center"></div>
+        <div id="modal-carousel" class="w-full h-full relative flex items-center justify-center"></div>
       </div>
       
       <div class="text-left w-full">
-        <span id="modal-badge" class="px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-brand-orange text-white mb-3 inline-block">
-          Gói Sản Phẩm
-        </span>
+        <span id="modal-badge" class="px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-brand-orange text-white mb-3 inline-block">Gói Sản Phẩm</span>
       </div>
       
-      <div id="modal-title-wrapper" class="modal-title-wrapper mb-2">
-        <div>
-          <h3 id="modal-title" class="text-lg sm:text-xl font-extrabold uppercase leading-snug text-left text-slate-800 dark:text-slate-100"></h3>
-        </div>
-      </div>
-
+      <h3 id="modal-title" class="text-lg sm:text-xl font-extrabold uppercase leading-snug text-left text-slate-800 dark:text-slate-100 mb-2"></h3>
       <p id="modal-description" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-4 italic text-left"></p>
       
-      <div id="modal-items-container" class="mt-4 border-t border-slate-100 dark:border-slate-800/80 pt-4 hidden text-left w-full">
+      <div id="modal-items-container" class="mt-4 border-t border-slate-100 dark:border-slate-800 pt-4 hidden text-left w-full">
         <h4 class="text-xs font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
         <div id="modal-small-items" class="grid grid-cols-5 gap-2"></div>
       </div>
       
-      <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-400 dark:text-slate-500 w-full">
-        <span id="modal-status-text"><i class="far fa-clock mr-1"></i> Trạng thái: Sắp ra mắt</span>
+      <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400 dark:text-slate-500 w-full">
+        <span><i class="far fa-clock mr-1"></i> Trạng thái: Sắp ra mắt</span>
         <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange">
           <span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>
           PREVIEW
