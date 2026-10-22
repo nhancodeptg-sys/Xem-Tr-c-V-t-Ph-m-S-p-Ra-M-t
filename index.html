@@ -1,759 +1,176 @@
 <!DOCTYPE html>
-<html lang="vi" prefix="og: http://ogp.me/ns#">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xem Trước Gói Vật Phẩm Play Together Chưa Ra Mắt</title>
-  <meta name="description" content="Trang xem trước độc quyền các gói sản phẩm, hộp bốc thăm và sự kiện tiếp theo chưa ra mắt của Play Together. Cập nhật sớm nhất các vật phẩm sắp xuất hiện!">
-  
-  <!-- PRELOAD TOÀN BỘ ẢNH ĐỂ LOAD TỨC THÌ -->
-  <link rel="preload" as="image" href="https://nhasangtaoptg.shop/itemplay/index.php/IMG_1787851474933">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/q30o78Qt.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/MGIKSrkL.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/HYLpwDfd.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/k9jlcZGq.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/wGGoqTci.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/8Wz8OYoZ.jpeg">
-  <link rel="preload" as="image" href="https://cdn.upanhlaylink.com/i/3aC7LxR4.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đã ngừng hoạt động - Xem trước vật phẩm Play Together</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <link rel="shortcut icon" href="//img.zing.vn/products/playtogether/favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b1329;
+            color: #94a3b8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            overflow: hidden;
+            position: relative;
+        }
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              orange: '#FF5722',
-              secondary: '#10b981',
-              lightBg: '#f4f6fa',
+        /* Ảnh nền động */
+        .bg-animation {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: url('https://cdn.upanhlaylink.com/i/ccyklmbi.png');
+            background-repeat: repeat;
+            background-size: 500px auto; 
+            opacity: 0.35;
+            filter: blur(4px);
+            z-index: 0;
+            animation: moveBackground 30s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                transform: translate(0, 0);
             }
-          },
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            outfit: ['"Outfit"', 'sans-serif'],
-          }
+            100% {
+                transform: translate(150px, 150px);
+            }
         }
-      }
-    }
-  </script>
 
-  <style>
-    :root {
-        --brand-primary: #FF5722;
-        --brand-secondary: #10b981;
-    }
-    html, body {
-      touch-action: pan-x pan-y;
-    }
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--brand-primary);
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background-color: #f6f8fc;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(240, 90, 34, 0.04) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.03) 0px, transparent 50%),
-        radial-gradient(at 50% 100%, rgba(240, 90, 34, 0.02) 0px, transparent 50%);
-      pointer-events: none;
-    }
-    html.dark body::before {
-      background-color: #0b0f19;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(240, 90, 34, 0.08) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.06) 0px, transparent 50%),
-        radial-gradient(at 50% 100%, rgba(240, 90, 34, 0.04) 0px, transparent 50%);
-    }
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      color: #1e293b;
-      overflow-x: hidden;
-    }
-    html.dark body {
-      color: #f8fafc;
-    }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
-    }
-    html.dark .glass-card {
-      background: rgba(17, 24, 39, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, var(--brand-primary), #ff8a00);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    /* Popup styling */
-    .popup-overlay {
-      display: none; 
-      position: fixed; 
-      inset: 0; 
-      background: rgba(15, 23, 42, 0.7); 
-      z-index: 10000;
-      justify-content: center; 
-      align-items: center; 
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-    .popup-content {
-      background: #ffffff; 
-      padding: 24px; 
-      border-radius: 24px; 
-      max-width: 560px; 
-      width: 90%;
-      position: relative; 
-      animation: popupShow .25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    html.dark .popup-content {
-      background: #111827;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #f8fafc;
-    }
-    @keyframes popupShow {
-      from { transform: scale(0.95); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    .popup-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.05);
-      color: #64748b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-      z-index: 10;
-    }
-    html.dark .popup-close {
-      background: rgba(255, 255, 255, 0.05);
-      color: #94a3b8;
-    }
-    .popup-close:hover {
-      background: #ef4444;
-      color: #ffffff;
-      transform: rotate(90deg);
-    }
-    
-    .modal-glossy-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.08) 100%);
-      pointer-events: none;
-      z-index: 5;
-    }
-    .modal-slider-img {
-      transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .modal-slider-img.active {
-      opacity: 1;
-      transform: scale(1.02);
-    }
-    .modal-slider-img.inactive {
-      opacity: 0;
-      transform: scale(1);
-    }
-    
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 20px;
-    }
-    @media (max-width: 640px) {
-      .product-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px !important;
-      }
-    }
-    
-    .preview-img-wrapper {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: rgba(15, 23, 42, 0.05);
-      overflow: hidden;
-    }
-    
-    img {
-      -webkit-touch-callout: none !important;
-      -webkit-user-select: none !important;
-      user-select: none !important;
-      pointer-events: none !important;
-    }
-    button, a, select, input, textarea, [role="button"], .preview-card, .carousel-dot {
-      pointer-events: auto !important;
-    }
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 19, 41, 0.45);
+            z-index: 1;
+        }
 
-    .modal-title-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      width: 100%;
-    }
-    .modal-avatar-circle {
-      width: 64px;
-      height: 64px;
-      min-width: 64px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid #f59e0b;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-      background: rgba(0,0,0,0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .modal-avatar-circle video,
-    .modal-avatar-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-    }
+        .card {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 540px;
+            background: rgba(25, 37, 67, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 44px 36px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
 
-    /* Style cho chữ watermark mờ trên vật phẩm chi tiết */
-    .item-watermark-container {
-      position: relative;
-    }
-    .item-watermark-container::after {
-      content: "Anh PTG";
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 800;
-      color: rgba(255, 255, 255, 0.35);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-      pointer-events: none;
-      letter-spacing: 0.5px;
-      transform: rotate(-15deg);
-    }
-  </style>
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(239, 68, 68, 0.15); /* Màu đỏ/hồng biểu thị trạng thái đóng cửa */
+            color: #ef4444;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
 
-  <script>
-    (function() {
-      const indexDefaultTheme = 'light';
-      const storedTheme = localStorage.getItem('color-theme');
-      if (storedTheme === 'dark' || (storedTheme === null && indexDefaultTheme === 'dark')) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    })();
-  </script>
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #ef4444;
+            border-radius: 50%;
+        }
+
+        .main-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+            line-height: 1.5;
+        }
+
+        p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 28px;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.12);
+            margin-bottom: 24px;
+        }
+
+        .support-info {
+            font-size: 0.825rem;
+            color: #94a3b8;
+        }
+
+        .support-info a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .support-info a:hover {
+            color: #7dd3fc;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 32px 20px;
+            }
+            .main-title {
+                font-size: 1.05rem;
+            }
+        }
+    </style>
 </head>
-<body class="transition-colors duration-300">
+<body>
 
-  <div class="bg-gradient-to-r from-brand-orange to-amber-500 text-white py-2 text-center text-xs font-bold uppercase tracking-widest shadow-md">
-    <i class="fas fa-bullhorn mr-2 animate-bounce"></i> Xem trước các gói sản phẩm đặc quyền sắp ra mắt!
-  </div>
+    <!-- Ảnh nền động -->
+    <div class="bg-animation"></div>
+    <div class="overlay"></div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-    
-    <header class="flex justify-between items-center mb-8 pb-4 border-b border-slate-200/50 dark:border-slate-800/50 gap-4">
-      <div class="flex items-center gap-3 min-w-0">
-        <img src="https://nhasangtaoptg.shop/itemplay/index.php/IMG_1787851474933" alt="Logo" class="h-9 sm:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 flex-shrink-0 rounded-lg">
-        <div class="min-w-0">
-          <h1 class="text-base sm:text-xl font-extrabold tracking-tight font-outfit uppercase truncate">
-            <span class="gradient-text">Play Together</span>
-            <span class="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs font-medium block normal-case tracking-normal opacity-85 mt-0.5 hidden sm:block truncate">Xem trước các gói sản phẩm độc quyền</span>
-          </h1>
+    <!-- Khung thông báo chính -->
+    <div class="card">
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            Đã ngừng hoạt động vĩnh viễn
         </div>
-      </div>
-      
-      <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-        <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-200/60 hover:bg-slate-200 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-slate-300/50 dark:border-slate-700/50 transition-all duration-300 text-slate-700 dark:text-slate-300" aria-label="Toggle dark mode">
-          <i id="theme-toggle-dark-icon" class="hidden fas fa-moon text-sm"></i>
-          <i id="theme-toggle-light-icon" class="hidden fas fa-sun text-sm"></i>
-        </button>
 
-        <a href="https://nhasangtaoptg.shop/" id="back-home-btn" class="inline-flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 dark:from-slate-800 dark:to-slate-700 dark:hover:from-slate-700 dark:hover:to-slate-600 text-white transition-all shadow-md transform active:scale-95">
-          <i class="fas fa-arrow-left"></i>
-          <span class="hidden sm:inline">Về trang chủ</span>
-          <span class="inline sm:hidden">Trang chủ</span>
-        </a>
-      </div>
-    </header>
+        <div class="main-title">Trang web Xem trước vật phẩm Play Together đã chính thức đóng cửa</div>
+        
+        <p>Cảm ơn tất cả các bạn đã luôn đồng hành, ủng hộ và gắn bó với chúng tôi trong suốt thời gian qua. Chúc các bạn có những trải nghiệm tuyệt vời cùng thế giới Play Together!</p>
+        
+        <div class="divider"></div>
 
-    <div class="text-center mb-8 max-w-2xl mx-auto px-4">
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-orange/10 dark:bg-brand-orange/5 border border-brand-orange/20 dark:border-brand-orange/10 text-brand-orange text-[10px] sm:text-xs font-extrabold uppercase tracking-widest mb-4 animate-pulse">
-        <span class="relative flex h-2 w-2">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-orange opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-orange"></span>
-        </span>
-        Hệ thống Live Update
-      </div>
-
-      <h2 id="page-main-heading" class="text-xl sm:text-3xl md:text-4xl font-extrabold font-outfit text-slate-800 dark:text-slate-100 leading-tight uppercase">
-        Vật phẩm sự kiện <span class="gradient-text">sắp ra mắt</span>
-      </h2>
-      
-      <div class="mt-6 max-w-xl mx-auto p-4 bg-gradient-to-br from-red-500/10 to-orange-500/10 dark:from-red-500/5 dark:to-orange-500/5 border border-red-500/20 dark:border-red-500/15 rounded-2xl flex items-start gap-3 shadow-lg shadow-red-500/5 backdrop-blur-md">
-        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 dark:bg-red-500/15 flex items-center justify-center text-red-500 dark:text-red-400 shadow-inner">
-          <i class="fas fa-triangle-exclamation text-sm animate-pulse"></i>
+        <div class="support-info">
+            Mọi thắc mắc xin vui lòng liên hệ: <a href="mailto:nhancodeptg@gmail.com">nhancodeptg@gmail.com</a>
         </div>
-        <div class="text-left flex-grow">
-          <h5 class="text-xs font-extrabold uppercase tracking-widest text-red-500 dark:text-red-400 mb-1">⚠️ Thông Báo</h5>
-          <p class="text-[11px] sm:text-xs leading-relaxed text-slate-600 dark:text-slate-400 font-medium">
-            Hình ảnh được cấp quyền từ <span class="font-bold text-slate-800 dark:text-slate-200">Play Together VNG</span>. Nếu sao chép/chia sẻ lại phải hiển thị rõ nguồn trong ảnh. Trường hợp cố tình lấy ảnh không để nguồn, chúng tôi sẽ <span class="font-extrabold text-red-600 dark:text-red-400">ngừng cập nhật thông tin vĩnh viễn</span>.
-          </p>
-        </div>
-      </div>
     </div>
 
-    <div class="flex justify-center mb-8">
-      <div class="inline-flex items-center gap-1.5 bg-slate-200/50 dark:bg-slate-800/50 p-1.5 rounded-2xl border border-slate-300/40 dark:border-slate-700/40 shadow-inner overflow-x-auto max-w-full no-scrollbar">
-        <button onclick="filterPreview('all')" id="tab-all" class="preview-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-300 bg-brand-orange text-white shadow-sm">
-          Tất Cả
-        </button>
-        <button onclick="filterPreview('product_package')" id="tab-product_package" class="preview-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
-          <i class="fas fa-gift mr-1 text-amber-500"></i> Gói Sản Phẩm
-        </button>
-        <button onclick="filterPreview('vvip_pass')" id="tab-vvip_pass" class="preview-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
-          <i class="fas fa-crown mr-1 text-yellow-500"></i> VIP Pass
-        </button>
-        <button onclick="filterPreview('bt21')" id="tab-bt21" class="preview-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
-          <i class="fas fa-star mr-1 text-purple-500"></i> BT21
-        </button>
-        <button onclick="filterPreview('lucky_box')" id="tab-lucky_box" class="preview-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
-          <i class="fas fa-box-open mr-1 text-brand-orange"></i> Hộp Bốc Thăm
-        </button>
-      </div>
-    </div>
-
-    <main id="preview-grid" class="product-grid">
-          <!-- Gói: Gói Nam Sinh Phòng Học Xám -->
-          <article onclick='openDetailPopup("Gói Nam Sinh Phòng Học Xám", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/q30o78Qt.jpeg"], ["https://cdn.upanhlaylink.com/i/zuDr7KTX.png","https://cdn.upanhlaylink.com/i/SCKwgqGF.png","https://cdn.upanhlaylink.com/i/fep9OHWs.png","https://cdn.upanhlaylink.com/i/yLqTy04c.png","https://cdn.upanhlaylink.com/i/Qg7Tt1XW.png","https://cdn.upanhlaylink.com/i/7EeKeuPK.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/q30o78Qt.jpeg" alt="Gói Nam Sinh Phòng Học Xám" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Nam Sinh Phòng Học Xám</h3>
-                
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/zuDr7KTX.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/SCKwgqGF.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/fep9OHWs.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+3</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Gói BT21 Halloween Bông Xốp -->
-          <article onclick='openDetailPopup("Gói BT21 Halloween Bông Xốp", "bt21", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/MGIKSrkL.jpeg"], ["https://cdn.upanhlaylink.com/i/tu5zLUaM.png","https://cdn.upanhlaylink.com/i/YqXI4Oqt.png","https://cdn.upanhlaylink.com/i/EAX97K4w.png","https://cdn.upanhlaylink.com/i/rRiS7Mgq.png","https://cdn.upanhlaylink.com/i/i8FoVGlW.png","https://cdn.upanhlaylink.com/i/udCF2qCN.png","https://cdn.upanhlaylink.com/i/yuGidMH5.png"])' style="cursor: pointer;" data-category="bt21" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-purple-600 text-white">Gói BT21</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/MGIKSrkL.jpeg" alt="Gói BT21 Halloween Bông Xốp" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói BT21 Halloween Bông Xốp</h3>
-                
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/tu5zLUaM.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/YqXI4Oqt.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/EAX97K4w.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+4</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Mùa Vvip Pass Hải Trình Lấp Lánh -->
-          <article onclick='openDetailPopup("Mùa Vvip Pass Hải Trình Lấp Lánh", "vvip_pass", "coming_soon", "Vvip Pass Shining Voyage", ["https://cdn.upanhlaylink.com/i/HYLpwDfd.jpeg"], ["https://cdn.upanhlaylink.com/i/Dh9Ogx6P.png","https://cdn.upanhlaylink.com/i/jmUEYEfF.png","https://cdn.upanhlaylink.com/i/QOlbBZIn.png","https://cdn.upanhlaylink.com/i/P4ZAvEeE.png","https://cdn.upanhlaylink.com/i/Uxl0dHby.png","https://cdn.upanhlaylink.com/i/rm9lHO1x.png","https://cdn.upanhlaylink.com/i/CZirVL1A.png","https://cdn.upanhlaylink.com/i/Ae0Ym7B5.png","https://cdn.upanhlaylink.com/i/BUWZZ0Wu.png"])' style="cursor: pointer;" data-category="vvip_pass" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-yellow-500 text-white">VIP Pass</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/HYLpwDfd.jpeg" alt="Mùa Vvip Pass Hải Trình Lấp Lánh" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Mùa Vvip Pass Hải Trình Lấp Lánh</h3>
-                <p class="text-xs text-slate-500 mt-2 italic">Vvip Pass Shining Voyage</p>
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/Dh9Ogx6P.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/jmUEYEfF.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/QOlbBZIn.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+6</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Gói Mẹo Phối Đồ Halloween -->
-          <article onclick='openDetailPopup("Gói Mẹo Phối Đồ Halloween", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/k9jlcZGq.jpeg"], ["https://cdn.upanhlaylink.com/i/3MbKJxwY.png","https://cdn.upanhlaylink.com/i/VgOlpUvg.png","https://cdn.upanhlaylink.com/i/i1lCo27Y.png","https://cdn.upanhlaylink.com/i/SuXjmAii.png","https://cdn.upanhlaylink.com/i/F4skeBhB.png","https://cdn.upanhlaylink.com/i/gRzojdDh.png","https://cdn.upanhlaylink.com/i/Idqv3Ss1.png","https://cdn.upanhlaylink.com/i/EJuP8Nhm.png","https://cdn.upanhlaylink.com/i/DEjDk8OO.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/k9jlcZGq.jpeg" alt="Gói Mẹo Phối Đồ Halloween" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Mẹo Phối Đồ Halloween</h3>
-                
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/3MbKJxwY.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/VgOlpUvg.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/i1lCo27Y.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+6</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Hộp Bốc Thăm Dự Án Zero -->
-          <article onclick='openDetailPopup("Hộp Bốc Thăm Dự Án Zero", "lucky_box", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/wGGoqTci.jpeg"], ["https://cdn.upanhlaylink.com/i/BpP6jBtZ.png","https://cdn.upanhlaylink.com/i/m8Ay9PhJ.png","https://cdn.upanhlaylink.com/i/W9hk9MIh.png","https://cdn.upanhlaylink.com/i/uQc2sDY0.png","https://cdn.upanhlaylink.com/i/c6euAmMA.png","https://cdn.upanhlaylink.com/i/3sMuyTgq.png","https://cdn.upanhlaylink.com/i/4KH678AW.png","https://cdn.upanhlaylink.com/i/ywozviav.png","https://cdn.upanhlaylink.com/i/aVQRSQeq.png","https://cdn.upanhlaylink.com/i/agRQJpEC.png","https://cdn.upanhlaylink.com/i/aDYB9bKA.png","https://cdn.upanhlaylink.com/i/62n03LYR.png","https://cdn.upanhlaylink.com/i/5MThhKYy.png","https://cdn.upanhlaylink.com/i/B33Ns1Sr.png"])' style="cursor: pointer;" data-category="lucky_box" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Hộp Bốc Thăm</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/wGGoqTci.jpeg" alt="Hộp Bốc Thăm Dự Án Zero" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Hộp Bốc Thăm Dự Án Zero</h3>
-                
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/BpP6jBtZ.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/m8Ay9PhJ.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/W9hk9MIh.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+11</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Hộp Bốc Thăm Chàng Lucifer -->
-          <article onclick='openDetailPopup("Hộp Bốc Thăm Chàng Lucifer", "lucky_box", "coming_soon", "Vvip Pass —> Hộp Bốc Thăm Chàng Lucifer", ["https://cdn.upanhlaylink.com/i/8Wz8OYoZ.jpeg"], ["https://cdn.upanhlaylink.com/i/zdMAUCsh.png","https://cdn.upanhlaylink.com/i/owrxXg6m.png","https://cdn.upanhlaylink.com/i/h9BhjKKI.png","https://cdn.upanhlaylink.com/i/WBjv797G.png","https://cdn.upanhlaylink.com/i/YJS42Fso.png","https://cdn.upanhlaylink.com/i/jPKsMsCx.png","https://cdn.upanhlaylink.com/i/bicFDxlx.png","https://cdn.upanhlaylink.com/i/3zGiCLxe.png","https://cdn.upanhlaylink.com/i/b9rlfjuL.png","https://cdn.upanhlaylink.com/i/Yu3qgwQw.png","https://cdn.upanhlaylink.com/i/5Gq9iDBn.png"])' style="cursor: pointer;" data-category="lucky_box" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Hộp Bốc Thăm</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/8Wz8OYoZ.jpeg" alt="Hộp Bốc Thăm Chàng Lucifer" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Hộp Bốc Thăm Chàng Lucifer</h3>
-                <p class="text-xs text-slate-500 mt-2 italic">Vvip Pass —> Hộp Bốc Thăm Chàng Lucifer</p>
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/zdMAUCsh.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/owrxXg6m.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/h9BhjKKI.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+8</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Gói: Gói BT21 Halloween Party -->
-          <article onclick='openDetailPopup("Gói BT21 Halloween Party", "bt21", "coming_soon", "Bữa Tiệc Halloween BT21", ["https://cdn.upanhlaylink.com/i/3aC7LxR4.png"], ["https://cdn.upanhlaylink.com/i/Tjln2EP4.png","https://cdn.upanhlaylink.com/i/NL9AuulI.png","https://cdn.upanhlaylink.com/i/2s9PJTyJ.png","https://cdn.upanhlaylink.com/i/WQS57N6L.png","https://cdn.upanhlaylink.com/i/bANl5BvC.png","https://cdn.upanhlaylink.com/i/LLFbd9A7.png","https://cdn.upanhlaylink.com/i/XbiU1Z9M.png"])' style="cursor: pointer;" data-category="bt21" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
-            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
-              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-purple-600 text-white">Gói BT21</span>
-              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/3aC7LxR4.png" alt="Gói BT21 Halloween Party" class="absolute inset-0 w-full h-full object-cover"></div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói BT21 Halloween Party</h3>
-                <p class="text-xs text-slate-500 mt-2 italic">Bữa Tiệc Halloween BT21</p>
-                <div class="mt-4">
-                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-                  <div class="grid grid-cols-4 gap-1.5">
-                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/Tjln2EP4.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/NL9AuulI.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/2s9PJTyJ.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+4</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
-                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
-              </div>
-            </div>
-          </article>
-    </main>
-
-  </div>
-
-  <script>
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const darkIcon = document.getElementById('theme-toggle-dark-icon');
-    const lightIcon = document.getElementById('theme-toggle-light-icon');
-
-    function updateIcons() {
-      if (document.documentElement.classList.contains('dark')) {
-        darkIcon.classList.add('hidden');
-        lightIcon.classList.remove('hidden');
-      } else {
-        lightIcon.classList.add('hidden');
-        darkIcon.classList.remove('hidden');
-      }
-    }
-    updateIcons();
-
-    themeToggleBtn.addEventListener('click', function() {
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
-      }
-      updateIcons();
-    });
-
-    function filterPreview(category) {
-      const tabs = document.querySelectorAll('.preview-tab');
-      tabs.forEach(tab => {
-        tab.classList.remove('bg-brand-orange', 'text-white', 'shadow-sm');
-        tab.classList.add('text-slate-500', 'dark:text-slate-400');
-      });
-
-      const activeTab = document.getElementById(`tab-${category}`);
-      if(activeTab) {
-        activeTab.classList.remove('text-slate-500', 'dark:text-slate-400');
-        activeTab.classList.add('bg-brand-orange', 'text-white', 'shadow-sm');
-      }
-
-      const cards = document.querySelectorAll('.preview-card');
-      cards.forEach(card => {
-        if(category === 'all' || card.getAttribute('data-category') === category) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-    }
-
-    let packageDetailCache = {};
-
-    function openDetailPopup(name, type, status, description, mainImages, smallItems, customAvatarUrl) {
-      let data = packageDetailCache[name];
-      if (!data) {
-        data = { name, type, status, description, mainImages, smallItems, customAvatarUrl };
-      }
-
-      const popup = document.getElementById('detail-popup');
-      const title = document.getElementById('modal-title');
-      const desc = document.getElementById('modal-description');
-      const badge = document.getElementById('modal-badge');
-      const carousel = document.getElementById('modal-carousel');
-      const itemsContainer = document.getElementById('modal-items-container');
-      const smallItemsGrid = document.getElementById('modal-small-items');
-      const titleWrapper = document.getElementById('modal-title-wrapper');
-      
-      title.innerText = data.name;
-      desc.innerText = data.description || "";
-      if(data.description) {
-        desc.style.display = 'block';
-      } else {
-        desc.style.display = 'none';
-      }
-      
-      const statusText = document.getElementById('modal-status-text');
-      if (statusText) {
-        statusText.innerHTML = `<i class="far fa-clock mr-1"></i> Trạng thái: ${data.status === 'released' ? 'Đã ra mắt' : 'Sắp ra mắt'}`;
-      }
-      
-      if (data.type === 'vvip_pass') {
-        badge.className = `px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-yellow-500 text-white mb-3 inline-block`;
-        badge.innerText = 'VIP Pass';
-      } else if (data.type === 'bt21') {
-        badge.className = `px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-purple-600 text-white mb-3 inline-block`;
-        badge.innerText = 'Gói BT21';
-      } else if (data.type === 'lucky_box') {
-        badge.className = `px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-brand-orange text-white mb-3 inline-block`;
-        badge.innerText = 'Hộp Bốc Thăm';
-      } else {
-        badge.className = `px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-brand-orange text-white mb-3 inline-block`;
-        badge.innerText = 'Gói Sản Phẩm';
-      }
-      
-      carousel.innerHTML = '';
-      if(!data.mainImages || data.mainImages.length === 0) {
-        carousel.innerHTML = `
-          <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 p-4">
-            <i class="fas fa-image text-4xl mb-2"></i>
-            <span class="text-xs">Không có ảnh chính</span>
-          </div>
-        `;
-      } else {
-        data.mainImages.forEach((img, idx) => {
-          const imgEl = document.createElement('img');
-          imgEl.src = img;
-          imgEl.alt = data.name;
-          imgEl.className = `absolute inset-0 w-full h-full object-cover modal-slider-img ${idx === 0 ? 'active' : 'inactive'}`;
-          carousel.appendChild(imgEl);
-        });
-      }
-
-      let circleAvatarEl = document.getElementById('modal-custom-circle-avatar');
-      if (data.customAvatarUrl) {
-        if (!circleAvatarEl) {
-          circleAvatarEl = document.createElement('div');
-          circleAvatarEl.id = 'modal-custom-circle-avatar';
-          circleAvatarEl.className = 'modal-avatar-circle';
-          titleWrapper.appendChild(circleAvatarEl);
-        }
-        if (data.customAvatarUrl.endsWith('.mov') || data.customAvatarUrl.endsWith('.mp4')) {
-          circleAvatarEl.innerHTML = `
-            <video autoplay muted loop playsinline>
-              <source src="${data.customAvatarUrl}" type="video/mp4">
-            </video>
-          `;
-        } else {
-          circleAvatarEl.innerHTML = `<img src="${data.customAvatarUrl}" alt="Avatar">`;
-        }
-        circleAvatarEl.style.display = 'flex';
-      } else {
-        if (circleAvatarEl) {
-          circleAvatarEl.style.display = 'none';
-        }
-      }
-      
-      smallItemsGrid.innerHTML = '';
-      if(data.smallItems && data.smallItems.length > 0) {
-        itemsContainer.classList.remove('hidden');
-        data.smallItems.forEach(itemSrc => {
-          const col = document.createElement('div');
-          col.className = 'item-watermark-container aspect-square rounded-xl bg-slate-100 dark:bg-slate-800/80 p-1 border border-slate-200/50 dark:border-slate-700/50 flex items-center justify-center overflow-hidden hover:scale-110 transition-transform duration-200';
-          col.innerHTML = `<img src="${itemSrc}" alt="item" class="w-full h-full object-contain rounded-lg">`;
-          smallItemsGrid.appendChild(col);
-        });
-      } else {
-        itemsContainer.classList.add('hidden');
-      }
-      
-      popup.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-    
-    function closeDetailPopup() {
-      document.getElementById('detail-popup').style.display = 'none';
-      document.body.style.overflow = '';
-    }
-    
-    document.addEventListener('DOMContentLoaded', () => {
-      const popup = document.getElementById('detail-popup');
-      if(popup) {
-        popup.addEventListener('click', function(e) {
-          if(e.target === this) {
-            closeDetailPopup();
-          }
-        });
-      }
-    });
-  </script>
-
-  <div id="detail-popup" class="popup-overlay" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="popup-content max-h-[90vh] overflow-y-auto">
-      <button type="button" class="popup-close" onclick="closeDetailPopup()">&times;</button>
-      
-      <div class="relative w-full aspect-video bg-slate-900/5 dark:bg-slate-950/10 rounded-2xl overflow-hidden mb-4 flex items-center justify-center border border-slate-200/50 dark:border-slate-800/80 shadow-md">
-        <div class="modal-glossy-overlay"></div>
-        <div id="modal-carousel" class="w-full h-full relative preview-carousel-slider flex items-center justify-center"></div>
-      </div>
-      
-      <div class="text-left w-full">
-        <span id="modal-badge" class="px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm bg-brand-orange text-white mb-3 inline-block">
-          Gói Sản Phẩm
-        </span>
-      </div>
-      
-      <div id="modal-title-wrapper" class="modal-title-wrapper mb-2">
-        <div>
-          <h3 id="modal-title" class="text-lg sm:text-xl font-extrabold uppercase leading-snug text-left text-slate-800 dark:text-slate-100"></h3>
-        </div>
-      </div>
-
-      <p id="modal-description" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-4 italic text-left"></p>
-      
-      <div id="modal-items-container" class="mt-4 border-t border-slate-100 dark:border-slate-800/80 pt-4 hidden text-left w-full">
-        <h4 class="text-xs font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
-        <div id="modal-small-items" class="grid grid-cols-5 gap-2"></div>
-      </div>
-      
-      <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-400 dark:text-slate-500 w-full">
-        <span id="modal-status-text"><i class="far fa-clock mr-1"></i> Trạng thái: Sắp ra mắt</span>
-        <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange">
-          <span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>
-          PREVIEW
-        </span>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
