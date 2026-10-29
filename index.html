@@ -138,7 +138,15 @@ input[type=number]{width:140px}
 <div id="toast"></div>
 
 <script>
-const BASE = "https://kocteamdinh-default-rtdb.firebaseio.com/";
+const firebaseConfig = {
+  projectId: "kocteamdinh"
+};
+const DB_URLS = [
+  `https://${firebaseConfig.projectId}-default-rtdb.firebaseio.com/`,
+  `https://${firebaseConfig.projectId}-default-rtdb.asia-southeast1.firebasedatabase.app/`
+];
+let BASE = DB_URLS[0];
+
 const DEF_U = '125655353677653296609', DEF_P = '12565535367765329';
 const TL = {both:'Video + Kịch bản', video:'Chỉ video', script:'Chỉ kịch bản'};
 const $=id=>document.getElementById(id);
@@ -154,9 +162,16 @@ const unstore=()=>localStorage.removeItem('vt_admin');
 async function sha(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('vt|'+s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return 'x'+h}}
 const hp=(u,p)=>sha(u+':'+p);
 
-async function reqDB(p, opts){
-  const r = await fetch(BASE + p + '.json', opts);
-  if(r.ok) return r.json();
+async function reqDB(p, opts) {
+  for (const url of [BASE, ...DB_URLS.filter(u => u !== BASE)]) {
+    try {
+      const r = await fetch(url + p + '.json', opts);
+      if (r.ok) {
+        if (BASE !== url) { BASE = url; }
+        return r.json();
+      }
+    } catch (e) {}
+  }
   throw 0;
 }
 const get = p => reqDB(p);
@@ -196,7 +211,6 @@ function render(){
   $('working').textContent=w.length;
   $('rate').textContent=`Video ${vnd(S.rate)} · Kịch bản ${vnd(S.rateS)}`;
 
-  // Duyệt video
   const q=M.filter(m=>m.pending&&m.pending.status==='pending');
   $('rc').textContent=q.length;
   $('rlist').innerHTML=q.map(m=>`<div class="person"><span class="nm"><b>${esc(m.name)}</b><br><a href="${esc(m.pending.url)}" target="_blank" rel="noopener" style="font-size:13px">${esc(m.pending.url)}</a>${m.pending.note?`<br><span class="mini">${esc(m.pending.note)}</span>`:''}</span><button class="pri" data-a="approve" data-id="${m.id}">✔ Duyệt</button><button class="del" data-a="reject" data-id="${m.id}">✖ Từ chối</button></div>`).join('')||'<p class="mini">Không có video nào chờ duyệt.</p>';
@@ -205,7 +219,6 @@ function render(){
   $('rt').value = S.rate;
   $('rs').value = S.rateS;
 
-  // Danh sách thành viên
   $('mlist').innerHTML = M.map(m=>`<div class="person">
     <span class="nm">${esc(m.name)}</span>
     <button data-a="vm" data-id="${m.id}">−</button>
@@ -223,7 +236,6 @@ function render(){
   const curSelVal = cmSel.value;
   cmSel.innerHTML='<option value="">— chưa gắn —</option>'+M.map(m=>`<option value="${m.id}"${m.id===curSelVal?' selected':''}>${esc(m.name)}</option>`).join('');
 
-  // Danh sách tài khoản
   $('alist').innerHTML = Object.entries(A).map(([u,x])=>`<div class="person" data-u="${esc(u)}">
     <b style="min-width:70px">${esc(u)}</b>
     <input class="fn" value="${esc(x.name)}" style="width:120px">
@@ -311,7 +323,7 @@ document.addEventListener('click', async e=>{
     case'money':{
       const m=S.members.find(x=>x.id===id);if(!m)break;const cur=tot(m,S);
       const v=(prompt(`${m.name} đang có ${vnd(cur)}.\nNhập số mới hoặc cộng/trừ (+50000 / -50000):`,String(cur))||'').trim();const n=Number(v);if(!v||isNaN(n))break;
-      const d=/^[+-]/.test(v)?n:n-cur;if(d)mutS(s=>{const x=s.members.find(y=>y.id===id);if(x)x.extra+=d});
+      const d=/^[+-]/.test(v)?n:n-cur;if(d)mutS(s=>{const x=s.members.find(y=>y.id==id);if(x)x.extra+=d});
       break;
     }
     case'approve':mutS(s=>{const m=s.members.find(x=>x.id===id);if(!m||!m.pending||m.pending.status!=='pending')return;m.subs=[...(m.subs||[]),{url:m.pending.url,t:m.pending.t,done:Date.now()}].slice(-30);delete m.pending;m.videos++;m.working=false;delete m.deadline;delete m.penalty;delete m.penaltyApplied;toast('Đã duyệt thành công!')});break;
