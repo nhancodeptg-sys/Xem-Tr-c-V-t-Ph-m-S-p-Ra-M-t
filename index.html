@@ -1,176 +1,346 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đã ngừng hoạt động - Xem trước vật phẩm Play Together</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0b1329;
-            color: #94a3b8;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Ảnh nền động */
-        .bg-animation {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background-image: url('https://cdn.upanhlaylink.com/i/ccyklmbi.png');
-            background-repeat: repeat;
-            background-size: 500px auto; 
-            opacity: 0.35;
-            filter: blur(4px);
-            z-index: 0;
-            animation: moveBackground 30s linear infinite;
-        }
-
-        @keyframes moveBackground {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(150px, 150px);
-            }
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(11, 19, 41, 0.45);
-            z-index: 1;
-        }
-
-        .card {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            max-width: 540px;
-            background: rgba(25, 37, 67, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 44px 36px;
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(239, 68, 68, 0.15); /* Màu đỏ/hồng biểu thị trạng thái đóng cửa */
-            color: #ef4444;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-bottom: 24px;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #ef4444;
-            border-radius: 50%;
-        }
-
-        .main-title {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 12px;
-            letter-spacing: -0.01em;
-            line-height: 1.5;
-        }
-
-        p {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #cbd5e1;
-            margin-bottom: 28px;
-        }
-
-        .divider {
-            width: 100%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.12);
-            margin-bottom: 24px;
-        }
-
-        .support-info {
-            font-size: 0.825rem;
-            color: #94a3b8;
-        }
-
-        .support-info a {
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .support-info a:hover {
-            color: #7dd3fc;
-            text-decoration: underline;
-        }
-
-        @media (max-width: 480px) {
-            .card {
-                padding: 32px 20px;
-            }
-            .main-title {
-                font-size: 1.05rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin - Quản lý Đội làm video</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--panel:rgba(255,255,255,.05);--line:rgba(120,140,255,.28);--tx:#e8ecff;--mut:#8a93c9;--red:#ff4d7a;--ok:#7dff6b;--cy:#22e6ff;--mg:#ff3df2}
+*{box-sizing:border-box}
+html{background:radial-gradient(900px 600px at 10% -10%,rgba(34,230,255,.16),transparent 60%),radial-gradient(800px 600px at 100% 100%,rgba(255,61,242,.16),transparent 60%),#090a18 fixed}
+body{margin:0;color:var(--tx);font:15px/1.5 "Be Vietnam Pro",system-ui,sans-serif;padding:20px}
+.wrap{max-width:940px;margin:auto;position:relative;z-index:1}
+h1{margin:0;font-size:32px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(90deg,var(--cy),var(--mg));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(34,230,255,.45))}
+h2{font-size:18px;margin:16px 0 10px;display:flex;align-items:center;gap:10px}
+h2::before{content:"";width:4px;height:18px;border-radius:2px;background:linear-gradient(var(--cy),var(--mg));box-shadow:0 0 10px var(--cy)}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.glass,section,.stat,.p{background:var(--panel);border:1px solid var(--line);border-radius:14px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(255,255,255,.02) inset,0 8px 30px rgba(0,0,0,.4)}
+section{padding:14px 16px;margin-bottom:14px}
+input,select,textarea,button{font:inherit;color:var(--tx);background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:10px;padding:7px 12px;transition:.15s}
+select option{background:#15172e;color:var(--tx)}
+input::placeholder,textarea::placeholder{color:#6870a8}
+textarea{width:100%;min-height:64px}
+button{cursor:pointer}button:hover{border-color:var(--cy);box-shadow:0 0 12px rgba(34,230,255,.35);color:#fff}
+.pri{background:linear-gradient(135deg,rgba(34,230,255,.25),rgba(255,61,242,.25));border-color:var(--cy);font-weight:700;color:#fff;box-shadow:0 0 14px rgba(34,230,255,.3)}
+:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+input:focus,select:focus,textarea:focus{border-color:var(--cy);box-shadow:0 0 12px rgba(34,230,255,.3);outline:none}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row+.row{margin-top:10px}
+label{font-size:13px;color:var(--mut);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+input[type=number]{width:140px}
+.mini{color:var(--mut);font-size:13px;margin:8px 0 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+.stat{padding:14px 16px}.stat span{color:var(--mut);font-size:13px}.stat small{color:var(--mut)}
+.stat b{display:block;font-size:30px;font-weight:800;line-height:1.25;color:var(--cy);text-shadow:0 0 16px rgba(34,230,255,.6)}
+.stat:nth-child(2) b{color:var(--mg);text-shadow:0 0 16px rgba(255,61,242,.6)}
+.stat:nth-child(4) b{color:var(--ok);text-shadow:0 0 16px rgba(125,255,107,.5)}
+.money b{color:#ffe14d;text-shadow:0 0 18px rgba(255,225,77,.55)}
+.person{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:9px 0;border-top:1px solid var(--line)}
+.person:first-child{border-top:0}.person .nm{flex:1;min-width:110px;font-size:15px}
+.cnt{min-width:26px;text-align:center;font-weight:700;color:var(--cy)}
+.live.on{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 0 14px var(--red)}.del{color:var(--red)}
+.badge{font-size:11px;background:linear-gradient(90deg,var(--cy),var(--mg));color:#0a0b1a;border-radius:99px;padding:1px 8px;font-weight:800}
+.modal{position:fixed;inset:0;background:rgba(5,5,16,.75);backdrop-filter:blur(6px);display:grid;place-items:center;z-index:50;padding:20px}
+.modal[hidden]{display:none}.modal .glass{background:#0f1126;padding:28px;max-width:360px;width:100%;border-color:var(--cy);box-shadow:0 0 40px rgba(34,230,255,.25)}
+.modal input{width:100%;margin-bottom:10px}.modal button{width:100%;margin-top:6px}
+.err{color:var(--red);font-size:13px;min-height:18px}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#15172e;border:1px solid var(--cy);color:#fff;padding:8px 18px;border-radius:10px;z-index:60;display:none;box-shadow:0 0 18px rgba(34,230,255,.4)}
+</style>
 </head>
 <body>
+<div class="wrap">
+  <div class="hd">
+    <h1>Admin Panel</h1>
+    <div id="who"></div>
+  </div>
 
-    <!-- Ảnh nền động -->
-    <div class="bg-animation"></div>
-    <div class="overlay"></div>
+  <div class="stats">
+    <div class="stat"><span>Tổng video</span><b id="total">0</b></div>
+    <div class="stat"><span>Tổng kịch bản</span><b id="scripts">0</b></div>
+    <div class="stat money"><span>Tiền quỹ</span><b id="money">0 đ</b><small id="rate"></small></div>
+    <div class="stat"><span>Đang làm</span><b id="working">0</b></div>
+  </div>
 
-    <!-- Khung thông báo chính -->
-    <div class="card">
-        <div class="status-badge">
-            <span class="status-dot"></span>
-            Đã ngừng hoạt động vĩnh viễn
-        </div>
+  <!-- QUẢN LÝ DUYỆT VIDEO -->
+  <section id="rsec">
+    <h2>Duyệt video chờ <span class="badge" id="rc">0</span></h2>
+    <div id="rlist"></div>
+  </section>
 
-        <div class="main-title">Trang web Xem trước vật phẩm Play Together đã chính thức đóng cửa</div>
-        
-        <p>Cảm ơn tất cả các bạn đã luôn đồng hành, ủng hộ và gắn bó với chúng tôi trong suốt thời gian qua. Chúc các bạn có những trải nghiệm tuyệt vời cùng thế giới Play Together!</p>
-        
-        <div class="divider"></div>
-
-        <div class="support-info">
-            Mọi thắc mắc xin vui lòng liên hệ: <a href="mailto:nhancodeptg@gmail.com">nhancodeptg@gmail.com</a>
-        </div>
+  <!-- THÔNG BÁO -->
+  <section>
+    <h2>Thông báo hệ thống</h2>
+    <textarea id="nt" placeholder="Nhập thông báo chung cho cả đội…"></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="pri" data-a="sendN">Gửi thông báo</button>
+      <button data-a="clearN">Xóa thông báo</button>
     </div>
+  </section>
 
+  <!-- CÀI ĐẶT TIỀN & ĐƠN GIÁ -->
+  <section>
+    <h2>Cấu hình tài chính</h2>
+    <div class="row"><label>Tiền quỹ hiện có <input type="number" id="bal" step="1000"></label><button class="pri" data-a="saveBal">Lưu</button></div>
+    <div class="row"><label>Mỗi video <input type="number" id="rt" step="1000" min="0"></label><button class="pri" data-a="saveR">Lưu</button><label>Mỗi kịch bản <input type="number" id="rs" step="1000" min="0"></label><button class="pri" data-a="saveRS">Lưu</button></div>
+    <div class="row"><label>Cộng/trừ nhanh <input type="number" id="adj" step="1000" placeholder="-50000 hoặc 50000"></label><button data-a="adjB">Áp dụng vào quỹ</button></div>
+  </section>
+
+  <!-- QUẢN LÝ THÀNH VIÊN -->
+  <section>
+    <h2>Thành viên</h2>
+    <div class="row">
+      <input id="nm" placeholder="Tên thành viên mới">
+      <button class="pri" data-a="addM">Thêm thành viên</button>
+      <button data-a="next">🔄 Chuyển lượt kế tiếp</button>
+      <button data-a="exportCSV">⬇ Xuất CSV</button>
+    </div>
+    <div id="mlist" style="margin-top:10px"></div>
+  </section>
+
+  <!-- QUẢN LÝ TÀI KHOẢN -->
+  <section>
+    <h2>Tài khoản đăng nhập</h2>
+    <div class="row"><input id="cu" placeholder="uid (a-z, 0-9)"><input id="cp" placeholder="Mật khẩu"><input id="cn" placeholder="Tên hiển thị"></div>
+    <div class="row">
+      <select id="cr"><option value="user">Thành viên</option><option value="admin">Admin</option></select>
+      <select id="cmSel"></select>
+      <select id="ct"><option value="both">Video + Kịch bản</option><option value="video">Chỉ video</option><option value="script">Chỉ kịch bản</option></select>
+      <button class="pri" data-a="createA">Tạo tài khoản</button>
+    </div>
+    <div id="alist" style="margin-top:10px"></div>
+  </section>
+</div>
+
+<!-- Modal Đăng nhập Admin -->
+<div class="modal" id="login" hidden><div class="glass">
+  <h2 style="font-size:24px;margin:0 0 4px">Đăng nhập Admin</h2>
+  <p class="mini" style="margin:0 0 16px">Nhập tài khoản quản trị để tiếp tục.</p>
+  <input id="lu" placeholder="Tài khoản (uid)" autocomplete="username">
+  <input id="lp" type="password" placeholder="Mật khẩu" autocomplete="current-password">
+  <div class="err" id="lerr"></div>
+  <button class="pri" data-a="login">Đăng nhập</button>
+</div></div>
+
+<!-- Modal Đặt Hạn Chót -->
+<div class="modal" id="dlm" hidden><div class="glass" style="max-width:400px">
+  <h2 style="font-size:20px;margin:0 0 4px">⏱ Đặt hạn chót làm việc</h2>
+  <p class="mini" style="margin:0 0 14px">Để trống hoặc điền 0 nếu không giới hạn.</p>
+  <label style="display:block;margin-bottom:10px">Thời gian làm (giờ)
+    <input type="number" id="dlh" min="0.5" max="720" step="0.5" placeholder="Ví dụ: 24" style="width:100%;margin-top:4px">
+  </label>
+  <label style="display:block;margin-bottom:14px">Tiền trừ nếu trễ hạn (đ)
+    <input type="number" id="dlp" min="0" step="1000" placeholder="Ví dụ: 50000" style="width:100%;margin-top:4px">
+  </label>
+  <button class="pri" data-a="dlgo">Xác nhận chuyển lượt</button>
+  <button data-a="dlcancel" style="margin-top:6px;width:100%">Hủy</button>
+</div></div>
+
+<div id="toast"></div>
+
+<script>
+const BASE = "https://kocteamdinh-default-rtdb.firebaseio.com/";
+const DEF_U = '125655353677653296609', DEF_P = '12565535367765329';
+const TL = {both:'Video + Kịch bản', video:'Chỉ video', script:'Chỉ kịch bản'};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+const vnd=n=>new Intl.NumberFormat('vi-VN').format(Math.round(n))+' đ';
+let S={members:[],rate:50000,rateS:100000,base:0,notice:{text:'',time:0}}, A={}, sess=null;
+let dlTarget=null, dlMode='live';
+
+try{let r=localStorage.getItem('vt_admin'); if(r) sess=JSON.parse(r);}catch(e){}
+const store=()=>localStorage.setItem('vt_admin',JSON.stringify(sess));
+const unstore=()=>localStorage.removeItem('vt_admin');
+
+async function sha(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('vt|'+s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return 'x'+h}}
+const hp=(u,p)=>sha(u+':'+p);
+
+async function reqDB(p, opts){
+  const r = await fetch(BASE + p + '.json', opts);
+  if(r.ok) return r.json();
+  throw 0;
+}
+const get = p => reqDB(p);
+const put = (p, v) => reqDB(p, {method: 'PUT', body: JSON.stringify(v)});
+
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',3000)}
+
+const tot=(m,s)=>m.videos*s.rate+m.scripts*s.rateS+m.extra;
+const sumM=s=>s.members.reduce((a,m)=>a+tot(m,s),0);
+const money=s=>s.base+sumM(s);
+function normS(d){d=Object.assign({rate:50000,rateS:100000,notice:{text:'',time:0}},d||{});
+  d.members=(d.members||[]).filter(Boolean).map(m=>({videos:0,scripts:0,extra:0,subs:[],penalty:0,penaltyApplied:false,...m}));
+  if(d.base==null)d.base=(d.balance||0)-sumM(d);delete d.balance;return d}
+const me=()=>{const a=sess&&A[sess.u];return a&&a.h===sess.h&&a.role==='admin'?{u:sess.u,...a}:null};
+
+async function pull(){
+  try {
+    S = normS(await get('videoTeam'));
+    A = (await get('accounts'))||{};
+    render();
+  } catch(e) {
+    toast('Lỗi kết nối Firebase – hãy kiểm tra kết nối mạng');
+  }
+}
+async function mutS(fn){try{S=normS(await get('videoTeam'));fn(S);await put('videoTeam',S);render()}catch(e){toast('Lưu thất bại')}}
+async function mutA(fn){try{A=(await get('accounts'))||{};fn(A);await put('accounts',A);render()}catch(e){toast('Lưu thất bại')}}
+
+function render(){
+  const a=me();
+  if(!a){$('login').hidden=false;return}
+  $('who').innerHTML=`<span class="glass" style="padding:5px 14px">${esc(a.name)} <span class="badge">Admin</span></span><button data-a="logout">Đăng xuất</button>`;
+  
+  const M=S.members, w=M.filter(m=>m.working);
+  $('total').textContent=M.reduce((x,m)=>x+m.videos,0);
+  $('scripts').textContent=M.reduce((x,m)=>x+m.scripts,0);
+  $('money').textContent=vnd(money(S));
+  $('working').textContent=w.length;
+  $('rate').textContent=`Video ${vnd(S.rate)} · Kịch bản ${vnd(S.rateS)}`;
+
+  // Duyệt video
+  const q=M.filter(m=>m.pending&&m.pending.status==='pending');
+  $('rc').textContent=q.length;
+  $('rlist').innerHTML=q.map(m=>`<div class="person"><span class="nm"><b>${esc(m.name)}</b><br><a href="${esc(m.pending.url)}" target="_blank" rel="noopener" style="font-size:13px">${esc(m.pending.url)}</a>${m.pending.note?`<br><span class="mini">${esc(m.pending.note)}</span>`:''}</span><button class="pri" data-a="approve" data-id="${m.id}">✔ Duyệt</button><button class="del" data-a="reject" data-id="${m.id}">✖ Từ chối</button></div>`).join('')||'<p class="mini">Không có video nào chờ duyệt.</p>';
+
+  $('bal').value = money(S);
+  $('rt').value = S.rate;
+  $('rs').value = S.rateS;
+
+  // Danh sách thành viên
+  $('mlist').innerHTML = M.map(m=>`<div class="person">
+    <span class="nm">${esc(m.name)}</span>
+    <button data-a="vm" data-id="${m.id}">−</button>
+    <span class="cnt">${m.videos}</span>
+    <button data-a="vp" data-id="${m.id}">+ video</button>
+    <button data-a="sm" data-id="${m.id}">−</button>
+    <span class="cnt">${m.scripts}</span>
+    <button data-a="sp" data-id="${m.id}">+ kịch bản</button>
+    <button data-a="money" data-id="${m.id}">${vnd(tot(m,S))}</button>
+    <button class="live ${m.working?'on':''}" data-a="live" data-id="${m.id}">${m.working?'Đang làm':'Tới lượt'}</button>
+    <button class="del" data-a="del" data-id="${m.id}">Xóa</button>
+  </div>`).join('')||'<p class="mini">Chưa có thành viên.</p>';
+
+  const cmSel=$('cmSel');
+  const curSelVal = cmSel.value;
+  cmSel.innerHTML='<option value="">— chưa gắn —</option>'+M.map(m=>`<option value="${m.id}"${m.id===curSelVal?' selected':''}>${esc(m.name)}</option>`).join('');
+
+  // Danh sách tài khoản
+  $('alist').innerHTML = Object.entries(A).map(([u,x])=>`<div class="person" data-u="${esc(u)}">
+    <b style="min-width:70px">${esc(u)}</b>
+    <input class="fn" value="${esc(x.name)}" style="width:120px">
+    <select class="fr"><option value="user"${x.role==='user'?' selected':''}>Thành viên</option><option value="admin"${x.role==='admin'?' selected':''}>Admin</option></select>
+    <select class="fm">${'<option value="">— chưa gắn —</option>'+M.map(m=>`<option value="${m.id}"${m.id===x.member?' selected':''}>${esc(m.name)}</option>`).join('')}</select>
+    <select class="ft">${Object.keys(TL).map(k=>`<option value="${k}"${x.tasks===k?' selected':''}>${TL[k]}</option>`).join('')}</select>
+    <button data-a="asave" data-id="${esc(u)}">Lưu</button>
+    <button data-a="apw" data-id="${esc(u)}">Đổi MK</button>
+    <button class="del" data-a="adel" data-id="${esc(u)}">Xóa</button>
+  </div>`).join('')||'<p class="mini">Chưa có tài khoản.</p>';
+}
+
+async function login(){
+  const u=$('lu').value.trim().toLowerCase(), p=$('lp').value, er=t=>$('lerr').textContent=t;
+  if(!u||!p)return er('Nhập đủ tài khoản và mật khẩu');
+  try{ A=(await get('accounts'))||{} }catch(e){return er('Không kết nối được Firebase')}
+  const h=await hp(u,p);
+  if(A[u]){
+    if(A[u].h!==h)return er('Sai tài khoản hoặc mật khẩu');
+    if(A[u].role!=='admin')return er('Tài khoản này không có quyền Admin');
+  } else if(u===DEF_U && p===DEF_P){
+    await mutA(o=>o[u]={name:'Admin',h,role:'admin',member:'',tasks:'both'});
+  } else {
+    return er('Sai tài khoản hoặc mật khẩu');
+  }
+  sess={u,h}; store(); $('login').hidden=true; $('lp').value=''; er(''); pull();
+}
+
+function exportCSV(){
+  const rows=[['Tên','Video','Kịch bản','Extra (đ)','Tổng tiền (đ)']];
+  S.members.forEach(m=>rows.push([m.name,m.videos,m.scripts,m.extra||0,tot(m,S)]));
+  rows.push([]);
+  rows.push(['TỔNG', S.members.reduce((a,m)=>a+m.videos,0), S.members.reduce((a,m)=>a+m.scripts,0), '', money(S)]);
+  const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='doi-video-admin-'+new Date().toLocaleDateString('vi-VN').replace(/\//g,'-')+'.csv';
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href); document.body.removeChild(a)},1000);
+  toast('Đã xuất file CSV!');
+}
+
+document.addEventListener('click', async e=>{
+  const t=e.target.closest('[data-a]'); if(!t)return;
+  const a=t.dataset.a, id=t.dataset.id;
+  if(a==='login')return login();
+  if(a==='logout'){sess=null;unstore();location.reload();return}
+  if(a==='exportCSV')return exportCSV();
+
+  const num=x=>Number($(x).value)||0;
+  switch(a){
+    case'sendN':{const txt=$('nt').value.trim();if(txt)mutS(s=>s.notice={text:txt,time:Date.now()});break}
+    case'clearN':$('nt').value='';mutS(s=>s.notice={text:'',time:0});break;
+    case'saveBal':{const v=num('bal');mutS(s=>s.base=v-sumM(s));break}
+    case'saveR':{const v=Math.max(0,num('rt'));mutS(s=>s.rate=v);break}
+    case'saveRS':{const v=Math.max(0,num('rs'));mutS(s=>s.rateS=v);break}
+    case'adjB':{const v=num('adj');if(v){mutS(s=>s.base+=v);$('adj').value=''}break}
+    case'addM':{const n=$('nm').value.trim();if(n){mutS(s=>s.members.push({id:Math.random().toString(36).slice(2,9),name:n,videos:0,scripts:0,extra:0,working:false}));$('nm').value=''}break}
+    case'next':{
+      if(!S.members.length)break;
+      const cur=S.members.findIndex(m=>m.working);
+      dlTarget=S.members[(cur+1)%S.members.length].id; dlMode='next';
+      $('dlh').value=''; $('dlp').value=''; $('dlm').hidden=false;
+      break;
+    }
+    case'vp':case'vm':case'sp':case'sm':mutS(s=>{const m=s.members.find(x=>x.id===id);if(!m)return;if(a==='vp')m.videos++;if(a==='vm'&&m.videos>0)m.videos--;if(a==='sp')m.scripts++;if(a==='sm'&&m.scripts>0)m.scripts--;});break;
+    case'live':{
+      const m=S.members.find(x=>x.id===id);if(!m)break;
+      if(m.working){mutS(s=>{const x=s.members.find(y=>y.id===id);if(x){x.working=false;delete x.pending;delete x.deadline;delete x.penalty;delete x.penaltyApplied}})}
+      else{dlTarget=id; dlMode='live'; $('dlh').value=''; $('dlp').value=''; $('dlm').hidden=false;}
+      break;
+    }
+    case'dlgo':{
+      const h=parseFloat($('dlh').value)||0, p=Math.max(0,parseInt($('dlp').value)||0);
+      const tgt=dlTarget, mo=dlMode; $('dlm').hidden=true; dlTarget=null; if(!tgt)break;
+      const applyDl=(m)=>{m.working=true;if(h>0){m.deadline=Date.now()+Math.round(h*3600000);m.penalty=p;m.penaltyApplied=false}else{delete m.deadline;delete m.penalty;delete m.penaltyApplied}};
+      if(mo==='next'){
+        mutS(s=>{s.members.forEach(m=>{m.working=false;delete m.pending;delete m.deadline;delete m.penalty;delete m.penaltyApplied});const m=s.members.find(x=>x.id===tgt);if(m)applyDl(m)});
+      }else{
+        mutS(s=>{const m=s.members.find(x=>x.id===tgt);if(m)applyDl(m)});
+      }
+      break;
+    }
+    case'dlcancel':{$('dlm').hidden=true; dlTarget=null; break;}
+    case'money':{
+      const m=S.members.find(x=>x.id===id);if(!m)break;const cur=tot(m,S);
+      const v=(prompt(`${m.name} đang có ${vnd(cur)}.\nNhập số mới hoặc cộng/trừ (+50000 / -50000):`,String(cur))||'').trim();const n=Number(v);if(!v||isNaN(n))break;
+      const d=/^[+-]/.test(v)?n:n-cur;if(d)mutS(s=>{const x=s.members.find(y=>y.id===id);if(x)x.extra+=d});
+      break;
+    }
+    case'approve':mutS(s=>{const m=s.members.find(x=>x.id===id);if(!m||!m.pending||m.pending.status!=='pending')return;m.subs=[...(m.subs||[]),{url:m.pending.url,t:m.pending.t,done:Date.now()}].slice(-30);delete m.pending;m.videos++;m.working=false;delete m.deadline;delete m.penalty;delete m.penaltyApplied;toast('Đã duyệt thành công!')});break;
+    case'reject':{const r=prompt('Lý do từ chối:');if(r===null)break;mutS(s=>{const m=s.members.find(x=>x.id===id);if(m&&m.pending){m.pending.status='rejected';m.pending.reply=r.trim()}});break;}
+    case'del':if(confirm('Xóa thành viên này?'))mutS(s=>s.members=s.members.filter(x=>x.id!==id));break;
+    case'createA':{
+      const u=$('cu').value.trim().toLowerCase(), p=$('cp').value;
+      if(!u||p.length<4)return toast('uid và mật khẩu (tối thiểu 4 ký tự)');
+      if(A[u])return toast('uid đã tồn tại');
+      const h=await hp(u,p), rec={name:$('cn').value.trim()||u,h,role:$('cr').value,member:$('cmSel').value,tasks:$('ct').value};
+      await mutA(o=>{if(!o[u])o[u]=rec}); $('cu').value=$('cp').value=$('cn').value=''; toast('Đã tạo tài khoản!');
+      break;
+    }
+    case'asave':{
+      const r=document.querySelector(`.person[data-u="${CSS.escape(id)}"]`);
+      const rec={name:r.querySelector('.fn').value.trim()||id,role:r.querySelector('.fr').value,member:r.querySelector('.fm').value,tasks:r.querySelector('.ft').value};
+      await mutA(o=>{if(o[id])Object.assign(o[id],rec)}); toast('Đã lưu tài khoản!');
+      break;
+    }
+    case'apw':{
+      const p=prompt('Mật khẩu mới (tối thiểu 4 ký tự):');if(!p||p.length<4)break;
+      const h=await hp(id,p); await mutA(o=>{if(o[id])o[id].h=h}); toast('Đã đổi mật khẩu!');
+      break;
+    }
+    case'adel':if(confirm('Xóa tài khoản '+id+'?'))mutA(o=>delete o[id]);break;
+  }
+});
+
+pull();
+</script>
 </body>
 </html>
