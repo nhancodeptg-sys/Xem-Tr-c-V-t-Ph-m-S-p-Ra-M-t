@@ -1,358 +1,802 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" prefix="og: http://ogp.me/ns#">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin - Quản lý Đội làm video</title>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--panel:rgba(255,255,255,.05);--line:rgba(120,140,255,.28);--tx:#e8ecff;--mut:#8a93c9;--red:#ff4d7a;--ok:#7dff6b;--cy:#22e6ff;--mg:#ff3df2}
-*{box-sizing:border-box}
-html{background:radial-gradient(900px 600px at 10% -10%,rgba(34,230,255,.16),transparent 60%),radial-gradient(800px 600px at 100% 100%,rgba(255,61,242,.16),transparent 60%),#090a18 fixed}
-body{margin:0;color:var(--tx);font:15px/1.5 "Be Vietnam Pro",system-ui,sans-serif;padding:20px}
-.wrap{max-width:940px;margin:auto;position:relative;z-index:1}
-h1{margin:0;font-size:32px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(90deg,var(--cy),var(--mg));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(34,230,255,.45))}
-h2{font-size:18px;margin:16px 0 10px;display:flex;align-items:center;gap:10px}
-h2::before{content:"";width:4px;height:18px;border-radius:2px;background:linear-gradient(var(--cy),var(--mg));box-shadow:0 0 10px var(--cy)}
-.hd{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
-.glass,section,.stat,.p{background:var(--panel);border:1px solid var(--line);border-radius:14px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(255,255,255,.02) inset,0 8px 30px rgba(0,0,0,.4)}
-section{padding:14px 16px;margin-bottom:14px}
-input,select,textarea,button{font:inherit;color:var(--tx);background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:10px;padding:7px 12px;transition:.15s}
-select option{background:#15172e;color:var(--tx)}
-input::placeholder,textarea::placeholder{color:#6870a8}
-textarea{width:100%;min-height:64px}
-button{cursor:pointer}button:hover{border-color:var(--cy);box-shadow:0 0 12px rgba(34,230,255,.35);color:#fff}
-.pri{background:linear-gradient(135deg,rgba(34,230,255,.25),rgba(255,61,242,.25));border-color:var(--cy);font-weight:700;color:#fff;box-shadow:0 0 14px rgba(34,230,255,.3)}
-:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
-input:focus,select:focus,textarea:focus{border-color:var(--cy);box-shadow:0 0 12px rgba(34,230,255,.3);outline:none}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row+.row{margin-top:10px}
-label{font-size:13px;color:var(--mut);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-input[type=number]{width:140px}
-.mini{color:var(--mut);font-size:13px;margin:8px 0 0}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
-.stat{padding:14px 16px}.stat span{color:var(--mut);font-size:13px}.stat small{color:var(--mut)}
-.stat b{display:block;font-size:30px;font-weight:800;line-height:1.25;color:var(--cy);text-shadow:0 0 16px rgba(34,230,255,.6)}
-.stat:nth-child(2) b{color:var(--mg);text-shadow:0 0 16px rgba(255,61,242,.6)}
-.stat:nth-child(4) b{color:var(--ok);text-shadow:0 0 16px rgba(125,255,107,.5)}
-.money b{color:#ffe14d;text-shadow:0 0 18px rgba(255,225,77,.55)}
-.person{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:9px 0;border-top:1px solid var(--line)}
-.person:first-child{border-top:0}.person .nm{flex:1;min-width:110px;font-size:15px}
-.cnt{min-width:26px;text-align:center;font-weight:700;color:var(--cy)}
-.live.on{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 0 14px var(--red)}.del{color:var(--red)}
-.badge{font-size:11px;background:linear-gradient(90deg,var(--cy),var(--mg));color:#0a0b1a;border-radius:99px;padding:1px 8px;font-weight:800}
-.modal{position:fixed;inset:0;background:rgba(5,5,16,.75);backdrop-filter:blur(6px);display:grid;place-items:center;z-index:50;padding:20px}
-.modal[hidden]{display:none}.modal .glass{background:#0f1126;padding:28px;max-width:360px;width:100%;border-color:var(--cy);box-shadow:0 0 40px rgba(34,230,255,.25)}
-.modal input{width:100%;margin-bottom:10px}.modal button{width:100%;margin-top:6px}
-.err{color:var(--red);font-size:13px;min-height:18px}
-#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#15172e;border:1px solid var(--cy);color:#fff;padding:8px 18px;border-radius:10px;z-index:60;display:none;box-shadow:0 0 18px rgba(34,230,255,.4)}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="hd">
-    <h1>Admin Panel</h1>
-    <div id="who"></div>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><span>Tổng video</span><b id="total">0</b></div>
-    <div class="stat"><span>Tổng kịch bản</span><b id="scripts">0</b></div>
-    <div class="stat money"><span>Tiền quỹ</span><b id="money">0 đ</b><small id="rate"></small></div>
-    <div class="stat"><span>Đang làm</span><b id="working">0</b></div>
-  </div>
-
-  <!-- QUẢN LÝ DUYỆT VIDEO -->
-  <section id="rsec">
-    <h2>Duyệt video chờ <span class="badge" id="rc">0</span></h2>
-    <div id="rlist"></div>
-  </section>
-
-  <!-- THÔNG BÁO -->
-  <section>
-    <h2>Thông báo hệ thống</h2>
-    <textarea id="nt" placeholder="Nhập thông báo chung cho cả đội…"></textarea>
-    <div class="row" style="margin-top:8px">
-      <button class="pri" data-a="sendN">Gửi thông báo</button>
-      <button data-a="clearN">Xóa thông báo</button>
-    </div>
-  </section>
-
-  <!-- CÀI ĐẶT TIỀN & ĐƠN GIÁ -->
-  <section>
-    <h2>Cấu hình tài chính</h2>
-    <div class="row"><label>Tiền quỹ hiện có <input type="number" id="bal" step="1000"></label><button class="pri" data-a="saveBal">Lưu</button></div>
-    <div class="row"><label>Mỗi video <input type="number" id="rt" step="1000" min="0"></label><button class="pri" data-a="saveR">Lưu</button><label>Mỗi kịch bản <input type="number" id="rs" step="1000" min="0"></label><button class="pri" data-a="saveRS">Lưu</button></div>
-    <div class="row"><label>Cộng/trừ nhanh <input type="number" id="adj" step="1000" placeholder="-50000 hoặc 50000"></label><button data-a="adjB">Áp dụng vào quỹ</button></div>
-  </section>
-
-  <!-- QUẢN LÝ THÀNH VIÊN -->
-  <section>
-    <h2>Thành viên</h2>
-    <div class="row">
-      <input id="nm" placeholder="Tên thành viên mới">
-      <button class="pri" data-a="addM">Thêm thành viên</button>
-      <button data-a="next">🔄 Chuyển lượt kế tiếp</button>
-      <button data-a="exportCSV">⬇ Xuất CSV</button>
-    </div>
-    <div id="mlist" style="margin-top:10px"></div>
-  </section>
-
-  <!-- QUẢN LÝ TÀI KHOẢN -->
-  <section>
-    <h2>Tài khoản đăng nhập</h2>
-    <div class="row"><input id="cu" placeholder="uid (a-z, 0-9)"><input id="cp" placeholder="Mật khẩu"><input id="cn" placeholder="Tên hiển thị"></div>
-    <div class="row">
-      <select id="cr"><option value="user">Thành viên</option><option value="admin">Admin</option></select>
-      <select id="cmSel"></select>
-      <select id="ct"><option value="both">Video + Kịch bản</option><option value="video">Chỉ video</option><option value="script">Chỉ kịch bản</option></select>
-      <button class="pri" data-a="createA">Tạo tài khoản</button>
-    </div>
-    <div id="alist" style="margin-top:10px"></div>
-  </section>
-</div>
-
-<!-- Modal Đăng nhập Admin -->
-<div class="modal" id="login" hidden><div class="glass">
-  <h2 style="font-size:24px;margin:0 0 4px">Đăng nhập Admin</h2>
-  <p class="mini" style="margin:0 0 16px">Nhập tài khoản quản trị để tiếp tục.</p>
-  <input id="lu" placeholder="Tài khoản (uid)" autocomplete="username">
-  <input id="lp" type="password" placeholder="Mật khẩu" autocomplete="current-password">
-  <div class="err" id="lerr"></div>
-  <button class="pri" data-a="login">Đăng nhập</button>
-</div></div>
-
-<!-- Modal Đặt Hạn Chót -->
-<div class="modal" id="dlm" hidden><div class="glass" style="max-width:400px">
-  <h2 style="font-size:20px;margin:0 0 4px">⏱ Đặt hạn chót làm việc</h2>
-  <p class="mini" style="margin:0 0 14px">Để trống hoặc điền 0 nếu không giới hạn.</p>
-  <label style="display:block;margin-bottom:10px">Thời gian làm (giờ)
-    <input type="number" id="dlh" min="0.5" max="720" step="0.5" placeholder="Ví dụ: 24" style="width:100%;margin-top:4px">
-  </label>
-  <label style="display:block;margin-bottom:14px">Tiền trừ nếu trễ hạn (đ)
-    <input type="number" id="dlp" min="0" step="1000" placeholder="Ví dụ: 50000" style="width:100%;margin-top:4px">
-  </label>
-  <button class="pri" data-a="dlgo">Xác nhận chuyển lượt</button>
-  <button data-a="dlcancel" style="margin-top:6px;width:100%">Hủy</button>
-</div></div>
-
-<div id="toast"></div>
-
-<script>
-const firebaseConfig = {
-  projectId: "kocteamdinh"
-};
-const DB_URLS = [
-  `https://${firebaseConfig.projectId}-default-rtdb.firebaseio.com/`,
-  `https://${firebaseConfig.projectId}-default-rtdb.asia-southeast1.firebasedatabase.app/`
-];
-let BASE = DB_URLS[0];
-
-const DEF_U = '125655353677653296609', DEF_P = '12565535367765329';
-const TL = {both:'Video + Kịch bản', video:'Chỉ video', script:'Chỉ kịch bản'};
-const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
-const vnd=n=>new Intl.NumberFormat('vi-VN').format(Math.round(n))+' đ';
-let S={members:[],rate:50000,rateS:100000,base:0,notice:{text:'',time:0}}, A={}, sess=null;
-let dlTarget=null, dlMode='live';
-
-try{let r=localStorage.getItem('vt_admin'); if(r) sess=JSON.parse(r);}catch(e){}
-const store=()=>localStorage.setItem('vt_admin',JSON.stringify(sess));
-const unstore=()=>localStorage.removeItem('vt_admin');
-
-async function sha(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('vt|'+s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return 'x'+h}}
-const hp=(u,p)=>sha(u+':'+p);
-
-async function reqDB(p, opts) {
-  for (const url of [BASE, ...DB_URLS.filter(u => u !== BASE)]) {
-    try {
-      const r = await fetch(url + p + '.json', opts);
-      if (r.ok) {
-        if (BASE !== url) { BASE = url; }
-        return r.json();
-      }
-    } catch (e) {}
-  }
-  throw 0;
-}
-const get = p => reqDB(p);
-const put = (p, v) => reqDB(p, {method: 'PUT', body: JSON.stringify(v)});
-
-function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',3000)}
-
-const tot=(m,s)=>m.videos*s.rate+m.scripts*s.rateS+m.extra;
-const sumM=s=>s.members.reduce((a,m)=>a+tot(m,s),0);
-const money=s=>s.base+sumM(s);
-function normS(d){d=Object.assign({rate:50000,rateS:100000,notice:{text:'',time:0}},d||{});
-  d.members=(d.members||[]).filter(Boolean).map(m=>({videos:0,scripts:0,extra:0,subs:[],penalty:0,penaltyApplied:false,...m}));
-  if(d.base==null)d.base=(d.balance||0)-sumM(d);delete d.balance;return d}
-const me=()=>{const a=sess&&A[sess.u];return a&&a.h===sess.h&&a.role==='admin'?{u:sess.u,...a}:null};
-
-async function pull(){
-  try {
-    S = normS(await get('videoTeam'));
-    A = (await get('accounts'))||{};
-    render();
-  } catch(e) {
-    toast('Lỗi kết nối Firebase – hãy kiểm tra kết nối mạng');
-  }
-}
-async function mutS(fn){try{S=normS(await get('videoTeam'));fn(S);await put('videoTeam',S);render()}catch(e){toast('Lưu thất bại')}}
-async function mutA(fn){try{A=(await get('accounts'))||{};fn(A);await put('accounts',A);render()}catch(e){toast('Lưu thất bại')}}
-
-function render(){
-  const a=me();
-  if(!a){$('login').hidden=false;return}
-  $('who').innerHTML=`<span class="glass" style="padding:5px 14px">${esc(a.name)} <span class="badge">Admin</span></span><button data-a="logout">Đăng xuất</button>`;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xem Trước Gói Vật Phẩm Play Together Chưa Ra Mắt</title>
+  <meta name="description" content="Trang xem trước độc quyền các gói sản phẩm, hộp bốc thăm và sự kiện tiếp theo chưa ra mắt của Play Together. Cập nhật sớm nhất các vật phẩm sắp xuất hiện!">
   
-  const M=S.members, w=M.filter(m=>m.working);
-  $('total').textContent=M.reduce((x,m)=>x+m.videos,0);
-  $('scripts').textContent=M.reduce((x,m)=>x+m.scripts,0);
-  $('money').textContent=vnd(money(S));
-  $('working').textContent=w.length;
-  $('rate').textContent=`Video ${vnd(S.rate)} · Kịch bản ${vnd(S.rateS)}`;
+  <!-- Icon & Fonts -->
+  <link rel="shortcut icon" href="//img.zing.vn/products/playtogether/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
-  const q=M.filter(m=>m.pending&&m.pending.status==='pending');
-  $('rc').textContent=q.length;
-  $('rlist').innerHTML=q.map(m=>`<div class="person"><span class="nm"><b>${esc(m.name)}</b><br><a href="${esc(m.pending.url)}" target="_blank" rel="noopener" style="font-size:13px">${esc(m.pending.url)}</a>${m.pending.note?`<br><span class="mini">${esc(m.pending.note)}</span>`:''}</span><button class="pri" data-a="approve" data-id="${m.id}">✔ Duyệt</button><button class="del" data-a="reject" data-id="${m.id}">✖ Từ chối</button></div>`).join('')||'<p class="mini">Không có video nào chờ duyệt.</p>';
-
-  $('bal').value = money(S);
-  $('rt').value = S.rate;
-  $('rs').value = S.rateS;
-
-  $('mlist').innerHTML = M.map(m=>`<div class="person">
-    <span class="nm">${esc(m.name)}</span>
-    <button data-a="vm" data-id="${m.id}">−</button>
-    <span class="cnt">${m.videos}</span>
-    <button data-a="vp" data-id="${m.id}">+ video</button>
-    <button data-a="sm" data-id="${m.id}">−</button>
-    <span class="cnt">${m.scripts}</span>
-    <button data-a="sp" data-id="${m.id}">+ kịch bản</button>
-    <button data-a="money" data-id="${m.id}">${vnd(tot(m,S))}</button>
-    <button class="live ${m.working?'on':''}" data-a="live" data-id="${m.id}">${m.working?'Đang làm':'Tới lượt'}</button>
-    <button class="del" data-a="del" data-id="${m.id}">Xóa</button>
-  </div>`).join('')||'<p class="mini">Chưa có thành viên.</p>';
-
-  const cmSel=$('cmSel');
-  const curSelVal = cmSel.value;
-  cmSel.innerHTML='<option value="">— chưa gắn —</option>'+M.map(m=>`<option value="${m.id}"${m.id===curSelVal?' selected':''}>${esc(m.name)}</option>`).join('');
-
-  $('alist').innerHTML = Object.entries(A).map(([u,x])=>`<div class="person" data-u="${esc(u)}">
-    <b style="min-width:70px">${esc(u)}</b>
-    <input class="fn" value="${esc(x.name)}" style="width:120px">
-    <select class="fr"><option value="user"${x.role==='user'?' selected':''}>Thành viên</option><option value="admin"${x.role==='admin'?' selected':''}>Admin</option></select>
-    <select class="fm">${'<option value="">— chưa gắn —</option>'+M.map(m=>`<option value="${m.id}"${m.id===x.member?' selected':''}>${esc(m.name)}</option>`).join('')}</select>
-    <select class="ft">${Object.keys(TL).map(k=>`<option value="${k}"${x.tasks===k?' selected':''}>${TL[k]}</option>`).join('')}</select>
-    <button data-a="asave" data-id="${esc(u)}">Lưu</button>
-    <button data-a="apw" data-id="${esc(u)}">Đổi MK</button>
-    <button class="del" data-a="adel" data-id="${esc(u)}">Xóa</button>
-  </div>`).join('')||'<p class="mini">Chưa có tài khoản.</p>';
-}
-
-async function login(){
-  const u=$('lu').value.trim().toLowerCase(), p=$('lp').value, er=t=>$('lerr').textContent=t;
-  if(!u||!p)return er('Nhập đủ tài khoản và mật khẩu');
-  try{ A=(await get('accounts'))||{} }catch(e){return er('Không kết nối được Firebase')}
-  const h=await hp(u,p);
-  if(A[u]){
-    if(A[u].h!==h)return er('Sai tài khoản hoặc mật khẩu');
-    if(A[u].role!=='admin')return er('Tài khoản này không có quyền Admin');
-  } else if(u===DEF_U && p===DEF_P){
-    await mutA(o=>o[u]={name:'Admin',h,role:'admin',member:'',tasks:'both'});
-  } else {
-    return er('Sai tài khoản hoặc mật khẩu');
-  }
-  sess={u,h}; store(); $('login').hidden=true; $('lp').value=''; er(''); pull();
-}
-
-function exportCSV(){
-  const rows=[['Tên','Video','Kịch bản','Extra (đ)','Tổng tiền (đ)']];
-  S.members.forEach(m=>rows.push([m.name,m.videos,m.scripts,m.extra||0,tot(m,S)]));
-  rows.push([]);
-  rows.push(['TỔNG', S.members.reduce((a,m)=>a+m.videos,0), S.members.reduce((a,m)=>a+m.scripts,0), '', money(S)]);
-  const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
-  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download='doi-video-admin-'+new Date().toLocaleDateString('vi-VN').replace(/\//g,'-')+'.csv';
-  document.body.appendChild(a); a.click();
-  setTimeout(()=>{URL.revokeObjectURL(a.href); document.body.removeChild(a)},1000);
-  toast('Đã xuất file CSV!');
-}
-
-document.addEventListener('click', async e=>{
-  const t=e.target.closest('[data-a]'); if(!t)return;
-  const a=t.dataset.a, id=t.dataset.id;
-  if(a==='login')return login();
-  if(a==='logout'){sess=null;unstore();location.reload();return}
-  if(a==='exportCSV')return exportCSV();
-
-  const num=x=>Number($(x).value)||0;
-  switch(a){
-    case'sendN':{const txt=$('nt').value.trim();if(txt)mutS(s=>s.notice={text:txt,time:Date.now()});break}
-    case'clearN':$('nt').value='';mutS(s=>s.notice={text:'',time:0});break;
-    case'saveBal':{const v=num('bal');mutS(s=>s.base=v-sumM(s));break}
-    case'saveR':{const v=Math.max(0,num('rt'));mutS(s=>s.rate=v);break}
-    case'saveRS':{const v=Math.max(0,num('rs'));mutS(s=>s.rateS=v);break}
-    case'adjB':{const v=num('adj');if(v){mutS(s=>s.base+=v);$('adj').value=''}break}
-    case'addM':{const n=$('nm').value.trim();if(n){mutS(s=>s.members.push({id:Math.random().toString(36).slice(2,9),name:n,videos:0,scripts:0,extra:0,working:false}));$('nm').value=''}break}
-    case'next':{
-      if(!S.members.length)break;
-      const cur=S.members.findIndex(m=>m.working);
-      dlTarget=S.members[(cur+1)%S.members.length].id; dlMode='next';
-      $('dlh').value=''; $('dlp').value=''; $('dlm').hidden=false;
-      break;
-    }
-    case'vp':case'vm':case'sp':case'sm':mutS(s=>{const m=s.members.find(x=>x.id===id);if(!m)return;if(a==='vp')m.videos++;if(a==='vm'&&m.videos>0)m.videos--;if(a==='sp')m.scripts++;if(a==='sm'&&m.scripts>0)m.scripts--;});break;
-    case'live':{
-      const m=S.members.find(x=>x.id===id);if(!m)break;
-      if(m.working){mutS(s=>{const x=s.members.find(y=>y.id===id);if(x){x.working=false;delete x.pending;delete x.deadline;delete x.penalty;delete x.penaltyApplied}})}
-      else{dlTarget=id; dlMode='live'; $('dlh').value=''; $('dlp').value=''; $('dlm').hidden=false;}
-      break;
-    }
-    case'dlgo':{
-      const h=parseFloat($('dlh').value)||0, p=Math.max(0,parseInt($('dlp').value)||0);
-      const tgt=dlTarget, mo=dlMode; $('dlm').hidden=true; dlTarget=null; if(!tgt)break;
-      const applyDl=(m)=>{m.working=true;if(h>0){m.deadline=Date.now()+Math.round(h*3600000);m.penalty=p;m.penaltyApplied=false}else{delete m.deadline;delete m.penalty;delete m.penaltyApplied}};
-      if(mo==='next'){
-        mutS(s=>{s.members.forEach(m=>{m.working=false;delete m.pending;delete m.deadline;delete m.penalty;delete m.penaltyApplied});const m=s.members.find(x=>x.id===tgt);if(m)applyDl(m)});
-      }else{
-        mutS(s=>{const m=s.members.find(x=>x.id===tgt);if(m)applyDl(m)});
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5722',
+              secondary: '#10b981',
+              lightBg: '#f4f6fa',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          }
+        }
       }
-      break;
     }
-    case'dlcancel':{$('dlm').hidden=true; dlTarget=null; break;}
-    case'money':{
-      const m=S.members.find(x=>x.id===id);if(!m)break;const cur=tot(m,S);
-      const v=(prompt(`${m.name} đang có ${vnd(cur)}.\nNhập số mới hoặc cộng/trừ (+50000 / -50000):`,String(cur))||'').trim();const n=Number(v);if(!v||isNaN(n))break;
-      const d=/^[+-]/.test(v)?n:n-cur;if(d)mutS(s=>{const x=s.members.find(y=>y.id==id);if(x)x.extra+=d});
-      break;
-    }
-    case'approve':mutS(s=>{const m=s.members.find(x=>x.id===id);if(!m||!m.pending||m.pending.status!=='pending')return;m.subs=[...(m.subs||[]),{url:m.pending.url,t:m.pending.t,done:Date.now()}].slice(-30);delete m.pending;m.videos++;m.working=false;delete m.deadline;delete m.penalty;delete m.penaltyApplied;toast('Đã duyệt thành công!')});break;
-    case'reject':{const r=prompt('Lý do từ chối:');if(r===null)break;mutS(s=>{const m=s.members.find(x=>x.id===id);if(m&&m.pending){m.pending.status='rejected';m.pending.reply=r.trim()}});break;}
-    case'del':if(confirm('Xóa thành viên này?'))mutS(s=>s.members=s.members.filter(x=>x.id!==id));break;
-    case'createA':{
-      const u=$('cu').value.trim().toLowerCase(), p=$('cp').value;
-      if(!u||p.length<4)return toast('uid và mật khẩu (tối thiểu 4 ký tự)');
-      if(A[u])return toast('uid đã tồn tại');
-      const h=await hp(u,p), rec={name:$('cn').value.trim()||u,h,role:$('cr').value,member:$('cmSel').value,tasks:$('ct').value};
-      await mutA(o=>{if(!o[u])o[u]=rec}); $('cu').value=$('cp').value=$('cn').value=''; toast('Đã tạo tài khoản!');
-      break;
-    }
-    case'asave':{
-      const r=document.querySelector(`.person[data-u="${CSS.escape(id)}"]`);
-      const rec={name:r.querySelector('.fn').value.trim()||id,role:r.querySelector('.fr').value,member:r.querySelector('.fm').value,tasks:r.querySelector('.ft').value};
-      await mutA(o=>{if(o[id])Object.assign(o[id],rec)}); toast('Đã lưu tài khoản!');
-      break;
-    }
-    case'apw':{
-      const p=prompt('Mật khẩu mới (tối thiểu 4 ký tự):');if(!p||p.length<4)break;
-      const h=await hp(id,p); await mutA(o=>{if(o[id])o[id].h=h}); toast('Đã đổi mật khẩu!');
-      break;
-    }
-    case'adel':if(confirm('Xóa tài khoản '+id+'?'))mutA(o=>delete o[id]);break;
-  }
-});
+  </script>
 
-pull();
-</script>
+  <style>
+    :root {
+        --brand-primary: #FF5722;
+        --brand-secondary: #10b981;
+    }
+    html, body {
+      touch-action: pan-x pan-y;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--brand-primary);
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-color: #f6f8fc;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(240, 90, 34, 0.04) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.03) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(240, 90, 34, 0.02) 0px, transparent 50%);
+      pointer-events: none;
+    }
+    html.dark body::before {
+      background-color: #0b0f19;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(240, 90, 34, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.06) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(240, 90, 34, 0.04) 0px, transparent 50%);
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+    html.dark body {
+      color: #f8fafc;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    }
+    html.dark .glass-card {
+      background: rgba(17, 24, 39, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--brand-primary), #ff8a00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    /* Popup styling */
+    .popup-overlay {
+      display: none; 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(15, 23, 42, 0.7); 
+      z-index: 10000;
+      justify-content: center; 
+      align-items: center; 
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .popup-content {
+      background: #ffffff; 
+      padding: 24px; 
+      border-radius: 24px; 
+      max-width: 560px; 
+      width: 90%;
+      position: relative; 
+      animation: popupShow .25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    html.dark .popup-content {
+      background: #111827;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #f8fafc;
+    }
+    @keyframes popupShow {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .popup-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      z-index: 10;
+    }
+    html.dark .popup-close {
+      background: rgba(255, 255, 255, 0.05);
+      color: #94a3b8;
+    }
+    .popup-close:hover {
+      background: #ef4444;
+      color: #ffffff;
+      transform: rotate(90deg);
+    }
+    
+    .modal-glossy-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.08) 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+    .modal-slider-img, .modal-slider-video {
+      transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-slider-img.active, .modal-slider-video.active {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    .modal-slider-img.inactive, .modal-slider-video.inactive {
+      opacity: 0;
+      transform: scale(1);
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    @media (max-width: 640px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+      }
+    }
+    
+    .preview-img-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: rgba(15, 23, 42, 0.05);
+      overflow: hidden;
+    }
+    
+    img, video {
+      -webkit-touch-callout: none !important;
+      -webkit-user-select: none !important;
+      user-select: none !important;
+    }
+    button, a, select, input, textarea, [role="button"], .preview-card, .carousel-dot {
+      pointer-events: auto !important;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+
+  <script>
+    (function() {
+      const indexDefaultTheme = 'light';
+      const storedTheme = localStorage.getItem('color-theme');
+      if (storedTheme === 'dark' || (storedTheme === null && indexDefaultTheme === 'dark')) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+</head>
+<body class="transition-colors duration-300">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-brand-orange to-amber-500 text-white py-2 text-center text-xs font-bold uppercase tracking-widest shadow-md">
+    <i class="fas fa-bullhorn mr-2 animate-bounce"></i> Xem trước các gói sản phẩm đặc quyền sắp ra mắt!
+  </div>
+
+  <!-- Main Wrapper -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    
+    <!-- Navbar Header -->
+    <header class="flex justify-between items-center mb-8 pb-4 border-b border-slate-200/50 dark:border-slate-800/50 gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <img src="https://nhasangtaoptg.shop/itemplay/index.php/IMG_1787851474933" alt="Logo" class="h-9 sm:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 flex-shrink-0 rounded-lg">
+        <div class="min-w-0">
+          <h1 class="text-base sm:text-xl font-extrabold tracking-tight font-outfit uppercase truncate">
+            <span class="gradient-text">Play Together</span>
+            <span class="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs font-medium block normal-case tracking-normal opacity-85 mt-0.5 hidden sm:block truncate">Xem trước các gói sản phẩm độc quyền</span>
+          </h1>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-200/60 hover:bg-slate-200 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-slate-300/50 dark:border-slate-700/50 transition-all duration-300 text-slate-700 dark:text-slate-300" aria-label="Toggle dark mode">
+          <i id="theme-toggle-dark-icon" class="hidden fas fa-moon text-sm"></i>
+          <i id="theme-toggle-light-icon" class="hidden fas fa-sun text-sm"></i>
+        </button>
+
+        <!-- Back to Homepage -->
+        <a href="https://nhasangtaoptg.shop/" id="back-home-btn" class="inline-flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 dark:from-slate-800 dark:to-slate-700 dark:hover:from-slate-700 dark:hover:to-slate-600 text-white transition-all shadow-md transform active:scale-95">
+          <i class="fas fa-arrow-left"></i>
+          <span class="hidden sm:inline">Về trang chủ</span>
+          <span class="inline sm:hidden">Trang chủ</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Title & Description -->
+    <div class="text-center mb-8 max-w-2xl mx-auto px-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-orange/10 dark:bg-brand-orange/5 border border-brand-orange/20 dark:border-brand-orange/10 text-brand-orange text-[10px] sm:text-xs font-extrabold uppercase tracking-widest mb-4 animate-pulse">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-orange opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-orange"></span>
+        </span>
+        Hệ thống Live Update
+      </div>
+
+      <h2 id="page-main-heading" class="text-xl sm:text-3xl md:text-4xl font-extrabold font-outfit text-slate-800 dark:text-slate-100 leading-tight uppercase">
+        Vật phẩm sự kiện <span class="gradient-text">sắp ra mắt</span>
+      </h2>
+      
+      <!-- Exclusive Notice Banner -->
+      <div class="mt-6 max-w-xl mx-auto p-4 bg-gradient-to-br from-red-500/10 to-orange-500/10 dark:from-red-500/5 dark:to-orange-500/5 border border-red-500/20 dark:border-red-500/15 rounded-2xl flex items-start gap-3 shadow-lg shadow-red-500/5 backdrop-blur-md">
+        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 dark:bg-red-500/15 flex items-center justify-center text-red-500 dark:text-red-400 shadow-inner">
+          <i class="fas fa-triangle-exclamation text-sm animate-pulse"></i>
+        </div>
+        <div class="text-left flex-grow">
+          <h5 class="text-xs font-extrabold uppercase tracking-widest text-red-500 dark:text-red-400 mb-1">⚠️ Thông Báo</h5>
+          <p class="text-[11px] sm:text-xs leading-relaxed text-slate-600 dark:text-slate-400 font-medium">
+            Hình ảnh được cấp quyền từ <span class="font-bold text-slate-800 dark:text-slate-200">Play Together VNG</span>. Nếu sao chép/chia sẻ lại phải hiển thị rõ nguồn trong ảnh. Trường hợp cố tình lấy ảnh không để nguồn, chúng tôi sẽ <span class="font-extrabold text-red-600 dark:text-red-400">ngừng cập nhật thông tin vĩnh viễn</span>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="flex justify-center mb-8">
+      <div class="inline-flex items-center gap-1.5 bg-slate-200/50 dark:bg-slate-800/50 p-1.5 rounded-2xl border border-slate-300/40 dark:border-slate-700/40 shadow-inner overflow-x-auto max-w-full no-scrollbar">
+        <button onclick="filterPreview('all')" id="tab-all" class="preview-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-300 bg-brand-orange text-white shadow-sm">
+          Tất Cả
+        </button>
+        <button onclick="filterPreview('animated_avatar')" id="tab-animated_avatar" class="preview-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+          <i class="fas fa-circle-play mr-1 text-purple-500"></i> Avatar Động
+        </button>
+        <button onclick="filterPreview('product_package')" id="tab-product_package" class="preview-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+          <i class="fas fa-gift mr-1 text-amber-500"></i> Gói Sản Phẩm
+        </button>
+        <button onclick="filterPreview('event')" id="tab-event" class="preview-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+          <i class="fas fa-calendar-star mr-1 text-brand-orange"></i> Sự Kiện
+        </button>
+      </div>
+    </div>
+
+    <!-- Preview Items Grid -->
+    <main id="preview-grid" class="product-grid">
+          <!-- AVATA MÙA NGƯỜI KẾ THỪA THẦN KIẾM (Chỉ hiện khi bấm tab Avatar Động hoặc Tất Cả) -->
+          <article onclick='openDetailPopup("AVATA MÙA NGƯỜI KẾ THỪA THẦN KIẾM", "animated_avatar", "coming_soon", "Khung avatar động chủ đề Người Kế Thừa Thần Kiếm độc quyền sắp ra mắt trong mùa tới.", ["https://www.image2url.com/r2/default/videos/1793953829665-bf4f88bf-c725-4e08-ae9a-6d6811749574.mov"])' style="cursor: pointer;" data-category="animated_avatar" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-purple-500/30 transform hover:-translate-y-1">
+            <!-- Khung vuông lớn, rõ nét cho Avatar Động -->
+            <div class="relative w-full aspect-square bg-slate-950 overflow-hidden flex items-center justify-center">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-purple-600 text-white">Avatar Động</span>
+              <video src="https://www.image2url.com/r2/default/videos/1793953829665-bf4f88bf-c725-4e08-ae9a-6d6811749574.mov" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
+            </div>
+            <!-- Phần tên và chi tiết rõ ràng bên dưới -->
+            <div class="p-5 flex-grow flex flex-col justify-between bg-gradient-to-b from-purple-500/5 to-transparent">
+              <div>
+                <div class="text-[10px] text-purple-600 dark:text-purple-400 font-bold mb-1 flex items-center gap-1"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-sm sm:text-base font-extrabold text-slate-800 dark:text-slate-100 uppercase tracking-tight group-hover:text-purple-600 transition-colors line-clamp-2">AVATA MÙA NGƯỜI KẾ THỪA THẦN KIẾM</h3>
+              </div>
+              <div class="mt-4 pt-3 border-t border-purple-500/10 flex items-center justify-between text-xs font-bold">
+                <span class="text-slate-400 text-[11px]">Xem chi tiết</span>
+                <span class="inline-flex items-center gap-1.5 text-purple-600"><span class="w-2 h-2 rounded-full bg-purple-600 animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Ồ! Cánh Của Tôi (Gói Sản Phẩm) -->
+          <article onclick='openDetailPopup("Ồ! Cánh Của Tôi", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/GTtuHVt0.png"], ["https://cdn.upanhlaylink.com/i/fNuLLsQE.png","https://cdn.upanhlaylink.com/i/fhNc2lNM.png","https://cdn.upanhlaylink.com/i/gnU2DhN0.png","https://cdn.upanhlaylink.com/i/IPVF63KN.png","https://cdn.upanhlaylink.com/i/f3VhlFb5.png","https://cdn.upanhlaylink.com/i/fGeygKja.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/GTtuHVt0.png" alt="Ồ! Cánh Của Tôi" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Ồ! Cánh Của Tôi</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/fNuLLsQE.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/fhNc2lNM.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/gnU2DhN0.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+3</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Gói Áo Len Trễ Vai Ấm Áp (Gói Sản Phẩm) -->
+          <article onclick='openDetailPopup("Gói Áo Len Trễ Vai Ấm Áp", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/20q1S4du.png"], ["https://cdn.upanhlaylink.com/i/GjgGkyV1.png","https://cdn.upanhlaylink.com/i/PdzbNU8b.png","https://cdn.upanhlaylink.com/i/8aQ7DDbO.png","https://cdn.upanhlaylink.com/i/E3tGRYx2.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/20q1S4du.png" alt="Gói Áo Len Trễ Vai Ấm Áp" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Áo Len Trễ Vai Ấm Áp</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/GjgGkyV1.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/PdzbNU8b.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/8aQ7DDbO.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/E3tGRYx2.png" class="w-full h-full object-contain rounded-lg"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Gói Chế Độ Uể Oải (Gói Sản Phẩm) -->
+          <article onclick='openDetailPopup("Gói Chế Độ Uể Oải", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/yh12KmNS.png"], ["https://cdn.upanhlaylink.com/i/n897QKvG.png","https://cdn.upanhlaylink.com/i/5roGLVIR.png","https://cdn.upanhlaylink.com/i/0iJkbJxc.png","https://cdn.upanhlaylink.com/i/HerAY72j.png","https://cdn.upanhlaylink.com/i/bH4jXWkn.png","https://cdn.upanhlaylink.com/i/l6hW9nzN.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/yh12KmNS.png" alt="Gói Chế Độ Uể Oải" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Chế Độ Uể Oải</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/n897QKvG.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/5roGLVIR.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/0iJkbJxc.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+3</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Gói Nàng Thơ Nổi Loạn -->
+          <article onclick='openDetailPopup("Gói Nàng Thơ Nổi Loạn", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/C2olM66x.png"], ["https://cdn.upanhlaylink.com/i/2i3QzCfH.png","https://cdn.upanhlaylink.com/i/7l6Bu5rw.png","https://cdn.upanhlaylink.com/i/4FGiGbDW.png","https://cdn.upanhlaylink.com/i/R4HOE2QX.png","https://cdn.upanhlaylink.com/i/PiYVZYk9.png","https://cdn.upanhlaylink.com/i/zU1ranvq.png","https://cdn.upanhlaylink.com/i/qq86XkJ4.png","https://cdn.upanhlaylink.com/i/msvywCBx.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/C2olM66x.png" alt="Gói Nàng Thơ Nổi Loạn" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Nàng Thơ Nổi Loạn</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/2i3QzCfH.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/7l6Bu5rw.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/4FGiGbDW.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+5</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Gói Học Viện Thiên Tộc -->
+          <article onclick='openDetailPopup("Gói Học Viện Thiên Tộc", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/X06HURl7.png"], ["https://cdn.upanhlaylink.com/i/5sMuz2Zw.png","https://cdn.upanhlaylink.com/i/kxq5Ujmd.png","https://cdn.upanhlaylink.com/i/UYcgm67E.png","https://cdn.upanhlaylink.com/i/8pmzU3n1.png","https://cdn.upanhlaylink.com/i/z4xntg5T.png","https://cdn.upanhlaylink.com/i/sIUCplxH.png","https://cdn.upanhlaylink.com/i/sEFKWgho.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/X06HURl7.png" alt="Gói Học Viện Thiên Tộc" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Học Viện Thiên Tộc</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/5sMuz2Zw.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/kxq5Ujmd.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/UYcgm67E.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+4</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Gói Đồ Thể Thao Croptop & Khoá Kéo -->
+          <article onclick='openDetailPopup("Gói Đồ Thể Thao Croptop & Khoá Kéo", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/bpVLwbKJ.png"], ["https://cdn.upanhlaylink.com/i/z0OxcdSj.png","https://cdn.upanhlaylink.com/i/1l4lOy7h.png","https://cdn.upanhlaylink.com/i/dhcwfVxY.png","https://cdn.upanhlaylink.com/i/3G42FVMx.png","https://cdn.upanhlaylink.com/i/SWIV80nq.png","https://cdn.upanhlaylink.com/i/UBlBSA8P.png","https://cdn.upanhlaylink.com/i/lUdjRqtu.png","https://cdn.upanhlaylink.com/i/3chKJ1jt.png","https://cdn.upanhlaylink.com/i/nuSaBoT4.png","https://cdn.upanhlaylink.com/i/GLyh9aKe.png","https://cdn.upanhlaylink.com/i/CH95nBsR.png","https://cdn.upanhlaylink.com/i/fq6d7YnH.png","https://cdn.upanhlaylink.com/i/jfKrFBZi.png","https://cdn.upanhlaylink.com/i/uV6ByU5L.png","https://cdn.upanhlaylink.com/i/HFV0srO2.png","https://cdn.upanhlaylink.com/i/UgDxwn34.png","https://cdn.upanhlaylink.com/i/uTNNMbQe.png","https://cdn.upanhlaylink.com/i/C0KXkIwl.png","https://cdn.upanhlaylink.com/i/QM1d7VVH.png","https://cdn.upanhlaylink.com/i/qZVQgWbX.png","https://cdn.upanhlaylink.com/i/ZgwsGR5f.png","https://cdn.upanhlaylink.com/i/ZKm1QnC2.png","https://cdn.upanhlaylink.com/i/eGJnqVgp.png","https://cdn.upanhlaylink.com/i/3zeqbpSJ.png","https://cdn.upanhlaylink.com/i/Zg1hhAZP.png","https://cdn.upanhlaylink.com/i/tGPQ1VMY.png","https://cdn.upanhlaylink.com/i/0MKo3Fi7.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/bpVLwbKJ.png" alt="Gói Đồ Thể Thao Croptop & Khoá Kéo" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Đồ Thể Thao Croptop & Khoá Kéo</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/z0OxcdSj.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/1l4lOy7h.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/dhcwfVxY.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+24</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Gói Anh Hùng Thủ Lĩnh Nhỏ -->
+          <article onclick='openDetailPopup("Gói Anh Hùng Thủ Lĩnh Nhỏ", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/hjWTXv6p.png"], ["https://cdn.upanhlaylink.com/i/BdNuUtsE.png","https://cdn.upanhlaylink.com/i/JnDHVrqM.png","https://cdn.upanhlaylink.com/i/VxFPZcC3.png","https://cdn.upanhlaylink.com/i/BUPqv63o.png","https://cdn.upanhlaylink.com/i/VOjMkPsv.png","https://cdn.upanhlaylink.com/i/oQZTVhvL.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/hjWTXv6p.png" alt="Gói Anh Hùng Thủ Lĩnh Nhỏ" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Anh Hùng Thủ Lĩnh Nhỏ</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/BdNuUtsE.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/JnDHVrqM.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/VxFPZcC3.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+3</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Gói Playlist Của Sion -->
+          <article onclick='openDetailPopup("Gói Playlist Của Sion", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/wYqvYIql.png"], ["https://cdn.upanhlaylink.com/i/DhSAVpOO.png","https://cdn.upanhlaylink.com/i/bisT117j.png","https://cdn.upanhlaylink.com/i/nzSTckAr.png","https://cdn.upanhlaylink.com/i/QhXFb2Ba.png","https://cdn.upanhlaylink.com/i/1igE4Ecf.png","https://cdn.upanhlaylink.com/i/ztaqKHKq.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/wYqvYIql.png" alt="Gói Playlist Của Sion" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Playlist Của Sion</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/DhSAVpOO.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/bisT117j.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/nzSTckAr.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+3</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Gói Code Genoa & Thiết Bị Găng Tay Arc Blazer -->
+          <article onclick='openDetailPopup("Gói Code Genoa & Thiết Bị Găng Tay Arc Blazer", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/I9fM7zIg.png"], ["https://cdn.upanhlaylink.com/i/AnKNdBYP.png","https://cdn.upanhlaylink.com/i/DbLtzrSd.png","https://cdn.upanhlaylink.com/i/eZudhnhH.png","https://cdn.upanhlaylink.com/i/60Bkg5TV.png","https://cdn.upanhlaylink.com/i/Oc4qvu7l.png","https://cdn.upanhlaylink.com/i/8kTwg0CU.png","https://cdn.upanhlaylink.com/i/tkAlECIk.png","https://cdn.upanhlaylink.com/i/arBlb1Q8.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/I9fM7zIg.png" alt="Gói Code Genoa & Thiết Bị Găng Tay Arc Blazer" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Code Genoa & Thiết Bị Găng Tay Arc Blazer</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/AnKNdBYP.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/DbLtzrSd.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/eZudhnhH.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+5</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Gói Lily Đen -->
+          <article onclick='openDetailPopup("Gói Lily Đen", "product_package", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/diCimZr8.png"], ["https://cdn.upanhlaylink.com/i/0Kz2gBWY.png","https://cdn.upanhlaylink.com/i/NV5Wa42L.png","https://cdn.upanhlaylink.com/i/xETBm6KU.png","https://cdn.upanhlaylink.com/i/MZ21FgO9.png","https://cdn.upanhlaylink.com/i/eShmcZcB.png","https://cdn.upanhlaylink.com/i/hNVKzIYX.png"])' style="cursor: pointer;" data-category="product_package" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Gói Sản Phẩm</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/diCimZr8.png" alt="Gói Lily Đen" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Gói Lily Đen</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/0Kz2gBWY.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/NV5Wa42L.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/xETBm6KU.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+3</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gói: Vật Phẩm Sự Kiện Alien Invasion -->
+          <article onclick='openDetailPopup("Vật Phẩm Sự Kiện Alien Invasion", "event", "coming_soon", "", ["https://cdn.upanhlaylink.com/i/WdYfpxmQ.jpeg"], ["https://cdn.upanhlaylink.com/i/QxEd70Pv.png","https://cdn.upanhlaylink.com/i/6BicxvFC.png","https://cdn.upanhlaylink.com/i/22BUUoRx.png","https://cdn.upanhlaylink.com/i/Y3djRlSC.png","https://cdn.upanhlaylink.com/i/EzHVy0HC.png","https://cdn.upanhlaylink.com/i/6JkJL0SL.png","https://cdn.upanhlaylink.com/i/X8URRHp5.png","https://cdn.upanhlaylink.com/i/47N7NlYA.png","https://cdn.upanhlaylink.com/i/pNUKHx1D.png","https://cdn.upanhlaylink.com/i/HEolzLf4.png","https://cdn.upanhlaylink.com/i/yMAw9oGH.png","https://cdn.upanhlaylink.com/i/jufVIqkD.png","https://cdn.upanhlaylink.com/i/iXyOBP6H.png","https://cdn.upanhlaylink.com/i/ajKtVx1G.png"])' style="cursor: pointer;" data-category="event" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-slate-200/60 transform hover:-translate-y-1">
+            <div class="preview-img-wrapper flex items-center justify-center bg-slate-900/5">
+              <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-brand-orange text-white">Sự Kiện</span>
+              <div class="w-full h-full relative"><img src="https://cdn.upanhlaylink.com/i/WdYfpxmQ.jpeg" alt="Vật Phẩm Sự Kiện Alien Invasion" class="absolute inset-0 w-full h-full object-cover"></div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-slate-400 mb-1.5 flex items-center gap-1.5"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-slate-100 leading-snug uppercase group-hover:text-brand-orange transition-colors">Vật Phẩm Sự Kiện Alien Invasion</h3>
+                
+                <div class="mt-4">
+                  <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+                  <div class="grid grid-cols-4 gap-1.5">
+                    <div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/QxEd70Pv.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/6BicxvFC.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-slate-100 p-1 border border-slate-200 flex items-center justify-center overflow-hidden"><img src="https://cdn.upanhlaylink.com/i/22BUUoRx.png" class="w-full h-full object-contain rounded-lg"></div><div class="aspect-square rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex flex-col items-center justify-center text-brand-orange font-extrabold text-[11px]">+11</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> Sắp ra mắt</span>
+                <span class="inline-flex items-center gap-1.5 font-extrabold text-brand-orange"><span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>PREVIEW</span>
+              </div>
+            </div>
+          </article>
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+    function updateIcons() {
+      if (document.documentElement.classList.contains('dark')) {
+        darkIcon.classList.add('hidden');
+        lightIcon.classList.remove('hidden');
+      } else {
+        lightIcon.classList.add('hidden');
+        darkIcon.classList.remove('hidden');
+      }
+    }
+    updateIcons();
+
+    themeToggleBtn.addEventListener('click', function() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+      updateIcons();
+    });
+
+    function filterPreview(category) {
+      const tabs = document.querySelectorAll('.preview-tab');
+      tabs.forEach(tab => {
+        tab.classList.remove('bg-brand-orange', 'text-white', 'shadow-sm');
+        tab.classList.add('text-slate-500', 'dark:text-slate-400');
+      });
+
+      const activeTab = document.getElementById(`tab-${category}`);
+      if(activeTab) {
+        activeTab.classList.remove('text-slate-500', 'dark:text-slate-400');
+        activeTab.classList.add('bg-brand-orange', 'text-white', 'shadow-sm');
+      }
+
+      const cards = document.querySelectorAll('.preview-card');
+      cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        if(category === 'all') {
+          // Ở tab Tất Cả: Ẩn các avatar động đi, chỉ hiện sự kiện và gói sản phẩm
+          if(cardCategory === 'animated_avatar') {
+            card.classList.add('hidden');
+          } else {
+            card.classList.remove('hidden');
+          }
+        } else if(cardCategory === category) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // Modal popup logic
+    function openDetailPopup(name, type, status, description, mediaItems, smallItems) {
+      const popup = document.getElementById('detail-popup');
+      const title = document.getElementById('modal-title');
+      const desc = document.getElementById('modal-description');
+      const badge = document.getElementById('modal-badge');
+      const carousel = document.getElementById('modal-carousel');
+      const itemsContainer = document.getElementById('modal-items-container');
+      const smallItemsGrid = document.getElementById('modal-small-items');
+      
+      title.innerText = name;
+      desc.innerText = description || "";
+      if(description) {
+        desc.style.display = 'block';
+      } else {
+        desc.style.display = 'none';
+      }
+      
+      const statusText = document.getElementById('modal-status-text');
+      if (statusText) {
+        statusText.innerHTML = `<i class="far fa-clock mr-1"></i> Trạng thái: ${status === 'released' ? 'Đã ra mắt' : 'Sắp ra mắt'}`;
+      }
+      
+      badge.className = `px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm text-white mb-3 inline-block ${type === 'animated_avatar' ? 'bg-purple-600' : 'bg-brand-orange'}`;
+      badge.innerText = type === 'event' ? 'Sự Kiện' : (type === 'animated_avatar' ? 'Avatar Động' : 'Gói Sản Phẩm');
+      
+      carousel.innerHTML = '';
+      if(!mediaItems || mediaItems.length === 0) {
+        carousel.innerHTML = `
+          <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 p-4">
+            <i class="fas fa-image text-4xl mb-2"></i>
+            <span class="text-xs">Không có phương tiện</span>
+          </div>
+        `;
+      } else {
+        mediaItems.forEach((src, idx) => {
+          const isVideo = src.endsWith('.mov') || src.endsWith('.mp4') || src.includes('videos/');
+          if (isVideo) {
+            const videoEl = document.createElement('video');
+            videoEl.src = src;
+            videoEl.autoplay = true;
+            videoEl.loop = true;
+            videoEl.muted = true;
+            videoEl.playsInline = true;
+            videoEl.className = `absolute inset-0 w-full h-full object-cover modal-slider-video ${idx === 0 ? 'active' : 'inactive'}`;
+            carousel.appendChild(videoEl);
+          } else {
+            const imgEl = document.createElement('img');
+            imgEl.src = src;
+            imgEl.alt = name;
+            imgEl.className = `absolute inset-0 w-full h-full object-cover modal-slider-img ${idx === 0 ? 'active' : 'inactive'}`;
+            carousel.appendChild(imgEl);
+          }
+        });
+      }
+      
+      smallItemsGrid.innerHTML = '';
+      if(smallItems && smallItems.length > 0) {
+        itemsContainer.classList.remove('hidden');
+        smallItems.forEach(smallImg => {
+          const col = document.createElement('div');
+          col.className = 'aspect-square rounded-xl bg-slate-100 dark:bg-slate-800/80 p-1 border border-slate-200/50 dark:border-slate-700/50 flex items-center justify-center overflow-hidden hover:scale-110 transition-transform duration-200';
+          col.innerHTML = `<img src="${smallImg}" alt="item" class="w-full h-full object-contain rounded-lg">`;
+          smallItemsGrid.appendChild(col);
+        });
+      } else {
+        itemsContainer.classList.add('hidden');
+      }
+      
+      popup.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeDetailPopup() {
+      document.getElementById('detail-popup').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      const popup = document.getElementById('detail-popup');
+      if(popup) {
+        popup.addEventListener('click', function(e) {
+          if(e.target === this) {
+            closeDetailPopup();
+          }
+        });
+      }
+    });
+  </script>
+
+  <!-- Item Detail Modal Popup -->
+  <div id="detail-popup" class="popup-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="popup-content max-h-[90vh] overflow-y-auto">
+      <button type="button" class="popup-close" onclick="closeDetailPopup()">&times;</button>
+      
+      <div class="relative w-full aspect-video bg-slate-900/5 dark:bg-slate-950/10 rounded-2xl overflow-hidden mb-4 flex items-center justify-center border border-slate-200/50 dark:border-slate-800/80 shadow-md">
+        <div class="modal-glossy-overlay"></div>
+        <div id="modal-carousel" class="w-full h-full relative preview-carousel-slider"></div>
+      </div>
+      
+      <div class="text-left w-full">
+        <span id="modal-badge" class="px-3.5 py-1 text-[11px] font-extrabold uppercase rounded-full shadow-sm text-white mb-3 inline-block">
+          Avatar Động
+        </span>
+      </div>
+      
+      <h3 id="modal-title" class="text-lg sm:text-xl font-extrabold mb-2 uppercase leading-snug text-left text-slate-800 dark:text-slate-100"></h3>
+      <p id="modal-description" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-4 italic text-left"></p>
+      
+      <div id="modal-items-container" class="mt-4 border-t border-slate-100 dark:border-slate-800/80 pt-4 hidden text-left w-full">
+        <h4 class="text-xs font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Vật phẩm bên trong:</h4>
+        <div id="modal-small-items" class="grid grid-cols-5 gap-2"></div>
+      </div>
+      
+      <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-400 dark:text-slate-500 w-full">
+        <span id="modal-status-text"><i class="far fa-clock mr-1"></i> Trạng thái: Sắp ra mắt</span>
+        <span class="inline-flex items-center gap-1.5 font-extrabold text-purple-600">
+          <span class="w-2 h-2 rounded-full bg-purple-600 animate-ping"></span>
+          PREVIEW
+        </span>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
