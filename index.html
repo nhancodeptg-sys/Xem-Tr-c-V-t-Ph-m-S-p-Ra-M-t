@@ -41,6 +41,9 @@
     }
     html, body {
       touch-action: pan-x pan-y;
+      -webkit-touch-callout: none !important;
+      -webkit-user-select: none !important;
+      user-select: none !important;
     }
     ::-webkit-scrollbar {
       width: 6px;
@@ -203,10 +206,12 @@
       overflow: hidden;
     }
     
+    /* Chống giữ / lưu ảnh / kéo thả triệt để */
     img, video {
       -webkit-touch-callout: none !important;
       -webkit-user-select: none !important;
       user-select: none !important;
+      pointer-events: none !important;
     }
     button, a, select, input, textarea, [role="button"], .preview-card, .carousel-dot {
       pointer-events: auto !important;
@@ -318,14 +323,12 @@
 
     <!-- Preview Items Grid -->
     <main id="preview-grid" class="product-grid">
-          <!-- AVATA MÙA NGƯỜI KẾ THỪA THẦN KIẾM (Chỉ hiện khi bấm tab Avatar Động hoặc Tất Cả) -->
+          <!-- AVATA MÙA NGƯỜI KẾ THỪA THẦN KIẾM (Thuộc Tab Avatar Động) -->
           <article onclick='openDetailPopup("AVATA MÙA NGƯỜI KẾ THỪA THẦN KIẾM", "animated_avatar", "coming_soon", "Khung avatar động chủ đề Người Kế Thừa Thần Kiếm độc quyền sắp ra mắt trong mùa tới.", ["https://www.image2url.com/r2/default/videos/1793953829665-bf4f88bf-c725-4e08-ae9a-6d6811749574.mov"])' style="cursor: pointer;" data-category="animated_avatar" class="preview-card glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group border border-purple-500/30 transform hover:-translate-y-1">
-            <!-- Khung vuông lớn, rõ nét cho Avatar Động -->
             <div class="relative w-full aspect-square bg-slate-950 overflow-hidden flex items-center justify-center">
               <span class="absolute top-3 left-3 z-10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase rounded-full shadow-md bg-purple-600 text-white">Avatar Động</span>
               <video src="https://www.image2url.com/r2/default/videos/1793953829665-bf4f88bf-c725-4e08-ae9a-6d6811749574.mov" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
             </div>
-            <!-- Phần tên và chi tiết rõ ràng bên dưới -->
             <div class="p-5 flex-grow flex flex-col justify-between bg-gradient-to-b from-purple-500/5 to-transparent">
               <div>
                 <div class="text-[10px] text-purple-600 dark:text-purple-400 font-bold mb-1 flex items-center gap-1"><i class="far fa-clock"></i><span>Mới cập nhật</span></div>
@@ -618,6 +621,14 @@
 
   <!-- Scripts -->
   <script>
+    // Chặn chuột phải, kéo thả và nhấn giữ lưu ảnh trên toàn trang
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+    document.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+    });
+
     const themeToggleBtn = document.getElementById('theme-toggle');
     const darkIcon = document.getElementById('theme-toggle-dark-icon');
     const lightIcon = document.getElementById('theme-toggle-light-icon');
@@ -661,7 +672,6 @@
       cards.forEach(card => {
         const cardCategory = card.getAttribute('data-category');
         if(category === 'all') {
-          // Ở tab Tất Cả: Ẩn các avatar động đi, chỉ hiện sự kiện và gói sản phẩm
           if(cardCategory === 'animated_avatar') {
             card.classList.add('hidden');
           } else {
